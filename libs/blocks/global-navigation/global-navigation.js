@@ -280,9 +280,6 @@ class Gnav {
     if (this.useUniversalNav) {
       delete this.blocks.profile;
       this.blocks.universalNav = toFragment`<div class="feds-utilities"></div>`;
-      this.blocks.universalNav.addEventListener('click', () => {
-        document.querySelector('.feds-toggle[aria-expanded=true]')?.click();
-      }, true);
     }
   };
 
