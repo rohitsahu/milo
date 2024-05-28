@@ -1,9 +1,9 @@
-// branch: MWPW-142267 commit: 08563c8c5ba2d0f1e7a6213cffe42c399af21bfc Fri, 26 Apr 2024 23:47:31 GMT
+// branch: MWPW-142267 commit: e62ae61349df09573c6a79d4fb52586a5d8d46e1 Tue, 28 May 2024 21:54:06 GMT
 import{html as e,css as o,LitElement as l}from"/libs/deps/lit-all.min.js";var t=class extends l{static styles=o`
         :host {
-            display: grid;
+            display: inline-grid;
             justify-items: start;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: 1fr;
             grid-auto-flow: row;
             width: auto;
             overflow: hidden;
@@ -12,9 +12,13 @@ import{html as e,css as o,LitElement as l}from"/libs/deps/lit-all.min.js";var t=
             justify-content: start;
             align-items: end;
             align-self: baseline;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            margin-right: 6vw;
         }
 
         ::slotted([slot='heading']) {
+            grid-column: 1 / -1;
             font-size: 18px;
             margin: 0;
             margin-bottom: 16px;
@@ -32,6 +36,7 @@ import{html as e,css as o,LitElement as l}from"/libs/deps/lit-all.min.js";var t=
             font-size: 14px;
             text-decoration: underline;
             color: var(--link-color-dark);
+            margin-top: 16px;
         }
     `;static properties={heading:{type:String,attribute:!0},mobileRows:{type:Number,attribute:!0}};updated(){this.hideSeeMoreEls()}hideSeeMoreEls(){this.isMobile&&this.rows.forEach((s,i)=>{i>=5&&(s.style.display=this.showAll?"flex":"none")})}constructor(){super(),this.showAll=!1,this.mobileRows=this.mobileRows===void 0?5:this.mobileRows}toggle(){this.showAll=!this.showAll,this.dispatchEvent(new CustomEvent("hide-see-more-elements",{bubbles:!0,composed:!0})),this.requestUpdate()}render(){return e`<slot name="heading"></slot>
             <slot name="content"></slot>

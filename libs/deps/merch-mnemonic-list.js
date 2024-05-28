@@ -1,10 +1,11 @@
-// branch: MWPW-142267 commit: 08563c8c5ba2d0f1e7a6213cffe42c399af21bfc Fri, 26 Apr 2024 23:47:31 GMT
-import{html as e,css as s,LitElement as i}from"/libs/deps/lit-all.min.js";var t=class extends i{static styles=s`
+// branch: MWPW-142267 commit: e62ae61349df09573c6a79d4fb52586a5d8d46e1 Tue, 28 May 2024 21:54:06 GMT
+import{html as e,css as i,LitElement as s}from"/libs/deps/lit-all.min.js";var t=class extends s{static styles=i`
         :host {
             display: flex;
             flex-direction: row;
             gap: 10px;
             margin-bottom: 10px;
+            align-items: flex-end;
         }
 
         ::slotted([slot='icon']) {
