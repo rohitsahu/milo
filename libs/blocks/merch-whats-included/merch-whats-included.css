@@ -6,9 +6,5 @@
 .merch-whats-included-container .fragment .container {
   display: grid;
   grid-auto-flow: column;
-  position: absolute;
-  align-items: start;
-  height: auto;
-  width: inherit;
-  padding: 0;
+  width: auto;
 }

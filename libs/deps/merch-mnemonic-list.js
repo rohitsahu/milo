@@ -1,5 +1,9 @@
-// branch: MWPW-142267 commit: e62ae61349df09573c6a79d4fb52586a5d8d46e1 Tue, 28 May 2024 21:54:06 GMT
-import{html as e,css as i,LitElement as s}from"/libs/deps/lit-all.min.js";var t=class extends s{static styles=i`
+// branch: MWPW-142267 commit: 426006b12ba6585f2a3ca596bedd47ba5d8f0bc3 Tue, 28 May 2024 22:11:01 GMT
+
+// src/merch-mnemonic-list.js
+import { html, css, LitElement } from "/libs/deps/lit-all.min.js";
+var MerchMnemonicList = class extends LitElement {
+  static styles = css`
         :host {
             display: flex;
             flex-direction: row;
@@ -24,8 +28,21 @@ import{html as e,css as i,LitElement as s}from"/libs/deps/lit-all.min.js";var t=
         :host .hidden {
             display: none;
         }
-    `;static properties={description:{type:String,attribute:!0}};constructor(){super()}render(){return e`
+    `;
+  static properties = {
+    description: { type: String, attribute: true }
+  };
+  constructor() {
+    super();
+  }
+  render() {
+    return html`
             <slot name="icon"></slot>
             <slot name="description">${this.description}</slot>
-        `}};customElements.define("merch-mnemonic-list",t);export{t as MerchMnemonicList};
-//# sourceMappingURL=merch-mnemonic-list.js.map
+        `;
+  }
+};
+customElements.define("merch-mnemonic-list", MerchMnemonicList);
+export {
+  MerchMnemonicList
+};

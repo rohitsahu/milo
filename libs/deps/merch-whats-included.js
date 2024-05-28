@@ -1,20 +1,19 @@
-// branch: MWPW-142267 commit: e62ae61349df09573c6a79d4fb52586a5d8d46e1 Tue, 28 May 2024 21:54:06 GMT
+// branch: MWPW-142267 commit: 426006b12ba6585f2a3ca596bedd47ba5d8f0bc3 Tue, 28 May 2024 22:11:01 GMT
 import{html as e,css as o,LitElement as l}from"/libs/deps/lit-all.min.js";var t=class extends l{static styles=o`
         :host {
             display: inline-grid;
-            justify-items: start;
-            grid-template-columns: 1fr;
+            place-items: end start;
             grid-auto-flow: row;
             width: auto;
             overflow: hidden;
-            align-content: stretch;
+            place-content: stretch start;
             box-sizing: border-box;
-            justify-content: start;
-            align-items: end;
             align-self: baseline;
             margin-top: 16px;
             margin-bottom: 16px;
-            margin-right: 6vw;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-auto-rows: unset;
+            height: inherit;
         }
 
         ::slotted([slot='heading']) {
@@ -44,3 +43,17 @@ import{html as e,css as o,LitElement as l}from"/libs/deps/lit-all.min.js";var t=
                       ${this.showAll?"- See less":"+ See more"}
                   </div>`:e``}`}get isMobile(){return window.matchMedia("(max-width: 767px)").matches}get rows(){return this.querySelectorAll("merch-mnemonic-list")}};customElements.define("merch-whats-included",t);export{t as MerchWhatsIncluded};
 //# sourceMappingURL=merch-whats-included.js.map
+howAll ? "- See less" : "+ See more"}
+                  </div>` : html``}`;
+  }
+  get isMobile() {
+    return window.matchMedia("(max-width: 767px)").matches;
+  }
+  get rows() {
+    return this.querySelectorAll("merch-mnemonic-list");
+  }
+};
+customElements.define("merch-whats-included", MerchWhatsIncluded);
+export {
+  MerchWhatsIncluded
+};
