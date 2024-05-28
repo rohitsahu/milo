@@ -1,4 +1,4 @@
-// branch: MWPW-142267 commit: 426006b12ba6585f2a3ca596bedd47ba5d8f0bc3 Tue, 28 May 2024 22:11:01 GMT
+// branch: MWPW-142267 commit: 426006b12ba6585f2a3ca596bedd47ba5d8f0bc3 Tue, 28 May 2024 22:22:44 GMT
 import{html as e,css as o,LitElement as l}from"/libs/deps/lit-all.min.js";var t=class extends l{static styles=o`
         :host {
             display: inline-grid;
@@ -43,17 +43,3 @@ import{html as e,css as o,LitElement as l}from"/libs/deps/lit-all.min.js";var t=
                       ${this.showAll?"- See less":"+ See more"}
                   </div>`:e``}`}get isMobile(){return window.matchMedia("(max-width: 767px)").matches}get rows(){return this.querySelectorAll("merch-mnemonic-list")}};customElements.define("merch-whats-included",t);export{t as MerchWhatsIncluded};
 //# sourceMappingURL=merch-whats-included.js.map
-howAll ? "- See less" : "+ See more"}
-                  </div>` : html``}`;
-  }
-  get isMobile() {
-    return window.matchMedia("(max-width: 767px)").matches;
-  }
-  get rows() {
-    return this.querySelectorAll("merch-mnemonic-list");
-  }
-};
-customElements.define("merch-whats-included", MerchWhatsIncluded);
-export {
-  MerchWhatsIncluded
-};
