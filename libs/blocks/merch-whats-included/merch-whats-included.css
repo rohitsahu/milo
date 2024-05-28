@@ -8,3 +8,9 @@
   grid-auto-flow: column;
   width: auto;
 }
+
+@media screen and (max-width: 767px) {
+  .merch-whats-included-container .fragment .container {
+    grid-auto-flow: row;
+  }
+}
