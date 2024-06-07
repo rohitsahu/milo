@@ -159,7 +159,6 @@ export default function init(el) {
   el.classList.add('con-block');
   const blockData = getBlockData(el);
   const blockText = decorateLayout(el);
-  console.log(blockData);
   decorateBlockText(blockText, blockData);
   decorateTextOverrides(el);
   decorateStaticLinks(el);
