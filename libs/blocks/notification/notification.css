@@ -1,0 +1,716 @@
+.notification {
+  display: flex;
+  width: 100%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.dark .notification,
+.notification.dark {
+  color: var(--color-white);
+}
+
+.notification p {
+  margin: 0;
+  inline-size: 100%;
+}
+
+.notification [class*="heading-"] {
+  margin-block-end: var(--spacing-xxs);
+}
+
+.notification [class*="heading-"] + p {
+  margin-bottom: var(--spacing-s);
+}
+
+.notification .foreground.container {
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-block: var(--spacing-s);
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+
+.notification.grad-ribbon::after {
+  content: '';
+  background: linear-gradient(90deg, #FA0F00 0%, #E9740A 15.42%, #FFCE2E 39.44%, #009C3B 67.99%, #2799F6 85.76%, #6349E0 95.42%, #9999FC 100%);
+  display: block;
+  block-size: 10px;
+  inline-size: 100%;
+}
+
+.notification .background img {
+  min-height: unset;
+}
+
+.notification .foreground.container .text {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: none;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.notification .foreground.container .image {
+  position: relative;
+  display: flex;
+  max-width: 75px;
+  margin: 0;
+  order: -1;
+}
+
+.notification .foreground.container > div {
+  flex-grow: 1;
+  flex-basis: 100%;
+  min-width: 0;
+}
+
+.notification .foreground.container .text a {
+  white-space: nowrap;
+}
+
+.notification:is(.ribbon, .pill) .foreground.container .text > * {
+  width: 100%;
+}
+
+.notification .foreground.container .text .heading-xl {
+  margin: 0 0 var(--spacing-xs);
+}
+
+.notification .foreground.container .text .supplemental-text {
+  padding-top: var(--spacing-s);
+  margin-bottom: 0;
+}
+
+.notification .icon-area {
+  display: flex;
+  align-items: center;
+}
+
+.notification.m-button .con-button {
+  padding-block: 7px 8px;
+  min-block-size: 36px;
+  font-size: 17px;
+  line-height: 21px;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.notification .text [class^="heading-"] + .action-area {
+  margin-top: var(--spacing-xs);
+}
+
+.notification.pill .promo-text .action-area {
+  justify-content: flex-end;
+  padding: 0 var(--spacing-xxs) var(--spacing-xxs) 0;
+  gap: var(--spacing-xxs);
+}
+
+.notification.center:is(.ribbon, .pill) .foreground.container .text .action-area {
+  justify-content: center;
+}
+
+.notification.ribbon .promo-text .action-area {
+  flex-wrap: nowrap;
+  gap: var(--spacing-xs);
+}
+
+.notification.ribbon .promo-text .action-area,
+.notification .foreground.container .text .action-area {
+  margin-bottom: 0;
+  display: flex;
+  gap: var(--spacing-s);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.notification .foreground.container .icon-area {
+  height: auto;
+  max-width: none;
+  margin-bottom: var(--spacing-xs);
+}
+
+.notification .foreground.container a.icon-area {
+  height: auto;
+  margin-bottom: 0;
+}
+
+.notification .foreground.container img {
+  display: block;
+}
+
+.notification.center:is(.ribbon, .pill) .foreground.container .text .icon-area img {
+  height: var(--icon-size-xxl);
+  max-width: 300px;
+  width: auto;
+}
+
+.notification .foreground.container .icon-area img {
+  max-width: 234px;
+  max-height: 40px;
+  height: auto;
+  width: auto;
+  object-fit: cover;
+  object-position: left top;
+}
+
+.notification.pill .promo-text .icon-area,
+.notification.pill .promo-text .icon-area img {
+  display: flex;
+  gap: var(--spacing-xxs);
+  align-items: center;
+  height: var(--icon-size-xs);
+}
+
+.notification .foreground.container .image video,
+.notification .foreground.container .image picture,
+.notification .foreground.container .image picture img {
+  width: 100%;
+  display: flex;
+}
+
+.notification .foreground.container .text a:not(.con-button) {
+  width: auto;
+  font-weight: normal;
+}
+
+.notification .foreground.container .text .action-area > a {
+  margin-right: 0;
+}
+
+.notification.ribbon .foreground.container {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.notification.center:is(.ribbon, .pill) .foreground.container .icon-area {
+  max-width: 100%;
+}
+
+.notification.center:is(.ribbon, .pill) .foreground.container .text .icon-area {
+  height: var(--icon-size-xxl);
+}
+
+.notification.ribbon .foreground.container .icon-area {
+  margin-bottom: 0;
+  height: var(--icon-size-m);
+}
+
+.notification.ribbon .foreground.container .icon-area img {
+  height: var(--icon-size-m);
+}
+
+.notification.extra-small .foreground.container a:not(.con-button):last-of-type {
+  margin-left: var(--spacing-xs);
+  color: var(--link-color);
+}
+
+.static-links .notification.extra-small .foreground.container a:not(.con-button):last-of-type {
+  color: inherit;
+}
+
+.notification.small .foreground.container .text a.con-button {
+  display: table;
+  margin-left: 0;
+}
+
+.notification .foreground.container .text .heading-l {
+  margin-bottom: var(--spacing-xxs);
+}
+
+.notification .foreground.container:not(.no-image) .text .body-s.action-area,
+.notification .foreground.container:not(.no-image) .text .body-m.action-area {
+  margin-bottom: 0;
+}
+
+.notification.extra-small .foreground.container {
+  min-height: 50px;
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+}
+
+.notification.center:is(.ribbon, .pill) .foreground.container .text {
+  margin: 80px 0;
+  text-align: center;
+  padding: 0;
+}
+
+.notification.extra-small .foreground.container .text {
+  display: block;
+}
+
+.notification.medium .foreground.container .text,
+.notification.large .foreground.container .text {
+  flex-direction: column;
+}
+
+.notification.small .foreground.container .text {
+  flex-direction: column;
+  max-width: 1000px;
+}
+
+.notification.center.small .foreground.container .text {
+  text-align: left;
+}
+
+.notification.center.small .foreground.container .text,
+.notification.center.extra-small .foreground.container .text {
+  margin: 0 auto;
+}
+
+.notification.medium .foreground.container {
+  max-width: 800px;
+  gap: var(--spacing-xs);
+}
+
+.notification.medium .foreground.container .text .heading-s {
+  margin-bottom: var(--spacing-xxs);
+}
+
+.notification.center.small .foreground.container .text p {
+  text-align: initial;
+}
+
+.notification.large .foreground.container {
+  max-width: 1000px;
+  gap: var(--spacing-xs);
+}
+
+.notification .foreground.container [data-align=center],
+.notification.center .foreground.container,
+.notification.center .foreground.container > * {
+  text-align: center;
+  justify-content: center;
+}
+
+.notification.pill .foreground.container {
+  width: 100%;
+  padding: 0;
+}
+
+.notification.center:is(.ribbon, .pill) .foreground.container {
+  padding: 0;
+}
+
+.notification.large.center .foreground.container,
+.notification.large .foreground.container.no-image {
+  max-width: 800px;
+}
+
+.notification.center .foreground.container .action-area {
+  justify-content: center;
+}
+
+.notification.center.small .foreground.container .text,
+.notification.center.small .foreground.container .text > * {
+  justify-content: flex-start;
+}
+
+.notification:is(.ribbon, .pill) .foreground.container .text .detail-m {
+  margin-bottom: var(--spacing-xs);
+}
+
+.notification.ribbon .foreground.container > :first-child {
+  padding: var(--spacing-xs) 0;
+}
+
+.notification.ribbon .promo-text[data-align="center"] {
+  justify-content: center;
+}
+
+.notification.ribbon .action-area .con-button {
+  flex-shrink: 0;
+}
+
+.notification.ribbon .promo-text.desktop-up,
+.notification.ribbon .promo-text.tablet-up {
+  display: none;
+}
+
+.notification.ribbon .promo-text.mobile-up {
+  display: flex;
+}
+
+.notification.ribbon .promo-text {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--spacing-xs);
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--spacing-xs) 0;
+}
+
+.notification.ribbon .promo-text .content-area {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+.notification.pill {
+  border-radius: var(--spacing-xs);
+  width: var(--grid-container-width);
+  margin: auto;
+  box-shadow: 0 3px 6px #707070;
+}
+
+.notification.pill .foreground.container .promo-text {
+  flex-direction: column;
+  padding: 0;
+}
+
+.notification.pill .promo-text .content-area {
+  padding: var(--spacing-xs) var(--spacing-xs) 0 var(--spacing-xs);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-xxs);
+}
+
+.notification.pill .promo-text .text-area {
+  margin-top: var(--spacing-m);
+}
+
+.notification.pill .promo-text .icon-area+.text-area {
+  margin-top: 0;
+}
+
+.notification.pill .promo-text .content-area .text-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxs);
+}
+
+.notification.pill .mobile-up.promo-text .detail-xs+.text-area {
+  gap: var(--spacing-xs);
+}
+
+.notification.pill .promo-close {
+  position: absolute;
+  right: var(--spacing-xxs);
+  top: var(--spacing-xxs);
+  height: 20px;
+  width: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.notification.pill .promo-close svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.notification.pill .promo-close circle {
+  fill: var(--color-black);
+}
+
+.notification.pill .promo-close line {
+  stroke: var(--color-white);
+}
+
+@media screen and (min-width: 600px) {
+  .notification .foreground.container {
+    align-items: center;
+    flex-direction: row;
+    margin: 0 auto;
+    padding: var(--spacing-m) 0;
+    gap: var(--spacing-xs);
+  }
+
+  .notification:is(.ribbon, .pill):not(.inline) .foreground.container > :first-child {
+    padding: 0;
+  }
+
+  .notification:is(.ribbon, .pill):not(.inline):not(.center) .foreground.container > :last-child {
+    margin-bottom: 0;
+  }
+
+  .notification .foreground.container .image {
+    margin: 0;
+    width: 35%;
+    max-width: 188px;
+    padding: 0;
+    order: unset;
+  }
+
+  .notification .foreground.container .text.image {
+    justify-content: flex-start;
+  }
+
+  .notification .background {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .notification .foreground.container .text {
+    margin-bottom: 0;
+    padding-right: 0;
+  }
+
+  .notification.small .foreground.container .text {
+    flex-flow: row nowrap;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .notification.small .foreground.container .text .body-m {
+    margin: 0;
+  }
+
+  .notification.small .foreground.container .text .body-m.action-area {
+    margin-left: 24px;
+  }
+
+  [dir = "rtl"] .notification.small .foreground.container .text .body-m.action-area {
+    margin-left: 0;
+    margin-right: 24px;
+  }
+
+  .notification.medium .foreground.container,
+  .notification.large .foreground.container {
+    gap: var(--spacing-s);
+  }
+
+  .notification .foreground.container .text+.image {
+    margin-right: 0;
+  }
+
+  .notification .foreground.container .icon-area {
+    width: auto;
+    margin-right: var(--spacing-xs);
+    margin-bottom: 0;
+  }
+
+  [dir = "rtl"] .notification .foreground.container .icon-area {
+    margin-left: var(--spacing-xs);
+    margin-right: 0;
+  }
+
+  .notification.extra-small .foreground.container.no-image .text {
+    display: flex;
+  }
+
+  .notification.extra-small .foreground.container.no-image .text a {
+    margin-left: 5px;
+  }
+
+  .notification.pill .promo-text .action-area {
+    justify-content: center;
+    padding: 0 0 var(--spacing-xxs);
+  }
+
+  .notification.small .foreground.container .text .action-area {
+    width: auto;
+    margin-top: 0;
+  }
+
+  .notification.small .foreground.container .text .icon-area {
+    height: 40px;
+  }
+
+  .notification.center:is(.ribbon, .pill) .foreground.container .text .icon-area img {
+    max-width: 234px;
+  }
+  
+  .notification.ribbon .promo-text .content-area .text-area {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--spacing-xxs);
+  }
+
+  .notification.ribbon .promo-text.mobile-up,
+  .notification.ribbon .promo-text.desktop-up {
+    display: none;
+  }
+
+  .notification.ribbon .promo-text.tablet-up {
+    display: flex;
+  }
+
+  .notification.pill .promo-text {
+    gap: var(--spacing-s);
+  }
+
+  .notification.pill .promo-text .content-area {
+    padding: var(--spacing-xxs) 0 0;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .notification .foreground.container {
+    inline-size: calc(var(--grid-container-width) * (8 / 12));
+    gap: var(--spacing-m);
+  }
+
+  .notification.col-10 .foreground.container {
+    inline-size: calc(var(--grid-container-width) * (10 / 12));
+    gap: var(--spacing-l);
+  }
+
+  .notification.col-12 .foreground.container {
+    inline-size: var(--grid-container-width);
+    gap: var(--spacing-xl);
+  }
+
+  .notification .foreground.container > div {
+    object-fit: cover;
+    padding-left: 0;
+  }
+
+  .notification .foreground.container .icon-area {
+    max-width: 400px;
+  }
+
+  .notification .foreground.container .text .heading-xl {
+    margin: 0 0 var(--spacing-xs);
+  }
+
+  .notification.center:is(.ribbon, .pill) .foreground.container .text .icon-area img {
+    max-width: 400px;
+  }
+
+  .notification.pill .promo-text .icon-area,
+  .notification.pill .promo-text .icon-area img {
+    height: var(--icon-size-m);
+  }
+
+  .notification.ribbon .foreground.container .icon-area,
+  .notification.ribbon .foreground.container .icon-area img {
+    height: var(--icon-size-xxl);
+  }
+
+  .notification.center:is(.ribbon, .pill) .foreground.container .text {
+    max-width: 50%;
+  }
+
+  .notification.extra-small .foreground.container {
+    padding-top: var(--spacing-xxs);
+    padding-bottom: var(--spacing-xxs);
+  }
+
+  .notification.medium .foreground.container {
+    gap: var(--spacing-m);
+  }
+
+  .notification.large .foreground.container {
+    gap: var(--spacing-l);
+  }
+
+  .notification.pill .promo-text .text-area {
+    margin-top: 0;
+  }
+
+  .notification .foreground.container .image {
+    inline-size: 20%;
+  }
+
+  .notification.col-10 .foreground.container .image {
+    inline-size: 30%;
+    max-inline-size: 300px;
+  }
+
+  .notification.col-12 .foreground.container .image {
+    inline-size: 33.333%;
+    max-inline-size: 400px;
+  }
+
+  .notification .foreground.container .text + .image {
+    margin-right: 0;
+  }
+
+  .notification.small .foreground.container .text {
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .notification.center.small .foreground.container .text,
+  .notification.center.small .foreground.container .text > * {
+    justify-content: center;
+  }
+
+  .notification.center.small .foreground.container .text p {
+    text-align: center;
+  }
+
+  .notification.medium .foreground.container .image {
+    max-width: 168px;
+  }
+
+  .notification.large .foreground.container .image {
+    max-width: 304px;
+  }
+
+  .notification.medium .foreground.container .text+.image {
+    margin-right: 0;
+  }
+
+  .notification.ribbon .promo-text .content-area {
+    gap: var(--spacing-m);
+  }
+
+  .notification.ribbon .promo-text .content-area .text-area {
+    gap: var(--spacing-xs);
+  }
+
+  .notification.ribbon .promo-text .action-area {
+    gap: var(--spacing-s);
+  }
+
+  .notification.ribbon .promo-text.mobile-up,
+  .notification.ribbon .promo-text.tablet-up {
+    display: none;
+  }
+
+  .notification.ribbon .promo-text.desktop-up {
+    display: flex;
+    gap: var(--spacing-m);
+  }
+
+  .notification.pill {
+    border-radius: var(--spacing-xl);
+    width: 85%;
+    max-width: 1600px;
+  }
+
+  .notification.pill .foreground.container .promo-text {
+    padding: var(--spacing-xs) 0;
+    flex-direction: row;
+    gap: var(--spacing-l);
+    justify-content: center;
+    max-width: 83.4%;
+  }
+
+  .notification.pill .promo-text .content-area,
+  .notification.pill .promo-text .action-area {
+    flex-direction: row;
+    padding: 0;
+    gap: var(--spacing-xs);
+    min-height: 40px;
+  }
+
+  .notification.pill .promo-close {
+    right: var(--spacing-s);
+    top: calc(50% - 10px);
+  }
+
+  .notification.pill .desktop-up.hide-block ~ .promo-close {
+    display: none;
+  }
+}
