@@ -556,16 +556,20 @@
 @media screen and (min-width: 1200px) {
   .notification .foreground.container {
     inline-size: calc(var(--grid-container-width) * (8 / 12));
+    margin-inline: var(--grid-margins-width-8);
     gap: var(--spacing-m);
   }
 
-  .notification.col-10 .foreground.container {
-    inline-size: calc(var(--grid-container-width) * (10 / 12));
+  .notification.max-width-10-desktop .foreground.container {
+    inline-size: unset;
+    margin-inline: var(--grid-margins-width-10);
     gap: var(--spacing-l);
   }
 
-  .notification.col-12 .foreground.container {
-    inline-size: var(--grid-container-width);
+  .notification.full-width .foreground.container {
+    inline-size: unset;
+    max-inline-size: 1200px;
+    margin-inline: var(--grid-margins-width);
     gap: var(--spacing-xl);
   }
 
