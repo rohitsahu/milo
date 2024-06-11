@@ -21,11 +21,13 @@ const variants = ['banner', 'ribbon', 'pill'];
 const sizes = ['small', 'medium', 'large'];
 const [banner, ribbon, pill] = variants;
 const [small, medium, large] = sizes;
+const defaultSize = medium;
+const defaultVariant = banner;
 const blockConfig = {
   [banner]: {
     [small]: ['s', 's'],
     [medium]: ['m', 'm'],
-    [large]: ['m', 'm'],
+    [large]: ['l', 'l'],
   },
   [ribbon]: ['s', 'm'],
   [pill]: {
@@ -44,8 +46,8 @@ const closeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                   </svg>`;
 
 function getBlockData(el) {
-  const variant = variants.find((variantClass) => el.classList.contains(variantClass)) || banner;
-  const size = sizes.find((sizeClass) => el.classList.contains(sizeClass)) || small;
+  const variant = variants.find((varClass) => el.classList.contains(varClass)) || defaultVariant;
+  const size = sizes.find((sizeClass) => el.classList.contains(sizeClass)) || defaultSize;
   const blockData = variant ? blockConfig[variant] : blockConfig[Object.keys(blockConfig)[0]];
   return variant && size && !Array.isArray(blockData) ? blockData[size] : blockData;
 }

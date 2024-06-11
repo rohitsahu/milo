@@ -94,15 +94,6 @@
   align-items: center;
 }
 
-.notification.m-button .con-button {
-  padding-block: 7px 8px;
-  min-block-size: 36px;
-  font-size: 17px;
-  line-height: 21px;
-  border-radius: 20px;
-  box-sizing: border-box;
-}
-
 .notification .text [class^="heading-"] + .action-area {
   margin-top: var(--spacing-xs);
 }
@@ -210,20 +201,6 @@
   height: var(--icon-size-m);
 }
 
-.notification.extra-small .foreground.container a:not(.con-button):last-of-type {
-  margin-left: var(--spacing-xs);
-  color: var(--link-color);
-}
-
-.static-links .notification.extra-small .foreground.container a:not(.con-button):last-of-type {
-  color: inherit;
-}
-
-.notification.small .foreground.container .text a.con-button {
-  display: table;
-  margin-left: 0;
-}
-
 .notification .foreground.container .text .heading-l {
   margin-bottom: var(--spacing-xxs);
 }
@@ -233,57 +210,10 @@
   margin-bottom: 0;
 }
 
-.notification.extra-small .foreground.container {
-  min-height: 50px;
-  padding-top: var(--spacing-xs);
-  padding-bottom: var(--spacing-xs);
-}
-
 .notification.center:is(.ribbon, .pill) .foreground.container .text {
   margin: 80px 0;
   text-align: center;
   padding: 0;
-}
-
-.notification.extra-small .foreground.container .text {
-  display: block;
-}
-
-.notification.medium .foreground.container .text,
-.notification.large .foreground.container .text {
-  flex-direction: column;
-}
-
-.notification.small .foreground.container .text {
-  flex-direction: column;
-  max-width: 1000px;
-}
-
-.notification.center.small .foreground.container .text {
-  text-align: left;
-}
-
-.notification.center.small .foreground.container .text,
-.notification.center.extra-small .foreground.container .text {
-  margin: 0 auto;
-}
-
-.notification.medium .foreground.container {
-  max-width: 800px;
-  gap: var(--spacing-xs);
-}
-
-.notification.medium .foreground.container .text .heading-s {
-  margin-bottom: var(--spacing-xxs);
-}
-
-.notification.center.small .foreground.container .text p {
-  text-align: initial;
-}
-
-.notification.large .foreground.container {
-  max-width: 1000px;
-  gap: var(--spacing-xs);
 }
 
 .notification .foreground.container [data-align=center],
@@ -302,18 +232,8 @@
   padding: 0;
 }
 
-.notification.large.center .foreground.container,
-.notification.large .foreground.container.no-image {
-  max-width: 800px;
-}
-
 .notification.center .foreground.container .action-area {
   justify-content: center;
-}
-
-.notification.center.small .foreground.container .text,
-.notification.center.small .foreground.container .text > * {
-  justify-content: flex-start;
 }
 
 .notification:is(.ribbon, .pill) .foreground.container .text .detail-m {
@@ -462,30 +382,6 @@
     padding-right: 0;
   }
 
-  .notification.small .foreground.container .text {
-    flex-flow: row nowrap;
-    align-items: center;
-    flex-grow: 1;
-  }
-
-  .notification.small .foreground.container .text .body-m {
-    margin: 0;
-  }
-
-  .notification.small .foreground.container .text .body-m.action-area {
-    margin-left: 24px;
-  }
-
-  [dir = "rtl"] .notification.small .foreground.container .text .body-m.action-area {
-    margin-left: 0;
-    margin-right: 24px;
-  }
-
-  .notification.medium .foreground.container,
-  .notification.large .foreground.container {
-    gap: var(--spacing-s);
-  }
-
   .notification .foreground.container .text+.image {
     margin-right: 0;
   }
@@ -496,31 +392,9 @@
     margin-bottom: 0;
   }
 
-  [dir = "rtl"] .notification .foreground.container .icon-area {
-    margin-left: var(--spacing-xs);
-    margin-right: 0;
-  }
-
-  .notification.extra-small .foreground.container.no-image .text {
-    display: flex;
-  }
-
-  .notification.extra-small .foreground.container.no-image .text a {
-    margin-left: 5px;
-  }
-
   .notification.pill .promo-text .action-area {
     justify-content: center;
     padding: 0 0 var(--spacing-xxs);
-  }
-
-  .notification.small .foreground.container .text .action-area {
-    width: auto;
-    margin-top: 0;
-  }
-
-  .notification.small .foreground.container .text .icon-area {
-    height: 40px;
   }
 
   .notification.center:is(.ribbon, .pill) .foreground.container .text .icon-area img {
@@ -604,19 +478,6 @@
     max-width: 50%;
   }
 
-  .notification.extra-small .foreground.container {
-    padding-top: var(--spacing-xxs);
-    padding-bottom: var(--spacing-xxs);
-  }
-
-  .notification.medium .foreground.container {
-    gap: var(--spacing-m);
-  }
-
-  .notification.large .foreground.container {
-    gap: var(--spacing-l);
-  }
-
   .notification.pill .promo-text .text-area {
     margin-top: 0;
   }
@@ -636,32 +497,6 @@
   }
 
   .notification .foreground.container .text + .image {
-    margin-right: 0;
-  }
-
-  .notification.small .foreground.container .text {
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .notification.center.small .foreground.container .text,
-  .notification.center.small .foreground.container .text > * {
-    justify-content: center;
-  }
-
-  .notification.center.small .foreground.container .text p {
-    text-align: center;
-  }
-
-  .notification.medium .foreground.container .image {
-    max-width: 168px;
-  }
-
-  .notification.large .foreground.container .image {
-    max-width: 304px;
-  }
-
-  .notification.medium .foreground.container .text+.image {
     margin-right: 0;
   }
 
