@@ -38,9 +38,7 @@
   justify-content: flex-start;
 }
 
-.notification.grad-ribbon::after {
-  content: '';
-  background: linear-gradient(90deg, #FA0F00 0%, #E9740A 15.42%, #FFCE2E 39.44%, #009C3B 67.99%, #2799F6 85.76%, #6349E0 95.42%, #9999FC 100%);
+.notification .border {
   display: block;
   block-size: 10px;
   inline-size: 100%;

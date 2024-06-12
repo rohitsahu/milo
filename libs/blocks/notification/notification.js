@@ -45,11 +45,20 @@ const closeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                     </g>
                   </svg>`;
 
+function getOpts(el) {
+  const optRows = [...el.querySelectorAll(':scope > div:nth-of-type(n+3)')];
+  if (!optRows.length) return {};
+  optRows.forEach((row) => row.remove());
+  const camel = (str) => str.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+  const fmt = (child) => child.textContent.toLowerCase().replace('\n', '').trim();
+  return optRows.reduce((a, c) => ({ ...a, [camel(fmt(c.children[0]))]: fmt(c.children[1]) }), {});
+}
+
 function getBlockData(el) {
   const variant = variants.find((varClass) => el.classList.contains(varClass)) || defaultVariant;
   const size = sizes.find((sizeClass) => el.classList.contains(sizeClass)) || defaultSize;
-  const blockData = variant ? blockConfig[variant] : blockConfig[Object.keys(blockConfig)[0]];
-  return variant && size && !Array.isArray(blockData) ? blockData[size] : blockData;
+  const fonts = blockConfig[variant];
+  return { fontSizes: !Array.isArray(fonts) ? fonts[size] : fonts, options: { ...getOpts(el) } };
 }
 
 function decorateStaticLinks(el) {
@@ -129,7 +138,12 @@ function decoratePill(el) {
   return foreground;
 }
 
-function decorateLayout(el) {
+function decorateBorder(el, { borderBottom }) {
+  const border = createTag('div', { style: `background: ${borderBottom};`, class: 'border' });
+  el.appendChild(border);
+}
+
+function decorateLayout(el, opts = {}) {
   const elems = el.querySelectorAll(':scope > div');
   if (elems.length > 1) decorateBlockBg(el, elems[0]);
   const foreground = elems[elems.length - 1];
@@ -154,14 +168,15 @@ function decorateLayout(el) {
   } else if (!iconArea) {
     foreground?.classList.add('no-image');
   }
+  if (opts.borderBottom) decorateBorder(el, opts);
   return foreground;
 }
 
 export default function init(el) {
   el.classList.add('con-block');
-  const blockData = getBlockData(el);
-  const blockText = decorateLayout(el);
-  decorateBlockText(blockText, blockData);
+  const { fontSizes, options } = getBlockData(el);
+  const blockText = decorateLayout(el, options);
+  decorateBlockText(blockText, fontSizes);
   decorateTextOverrides(el);
   decorateStaticLinks(el);
 }
