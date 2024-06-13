@@ -29,7 +29,7 @@ const blockConfig = {
     [medium]: ['m', 'm'],
     [large]: ['l', 'l'],
   },
-  [ribbon]: ['s', 'm'],
+  [ribbon]: ['m', 'm'],
   [pill]: {
     [small]: ['m', 'm'],
     [medium]: ['s', 's'],
@@ -37,13 +37,13 @@ const blockConfig = {
   },
 };
 
-const closeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                    <g transform="translate(-10500 3403)">
-                      <circle cx="10" cy="10" r="10" transform="translate(10500 -3403)" fill="#707070"></circle>
-                      <line y1="8" x2="8" transform="translate(10506 -3397)" fill="none" stroke="#fff" stroke-width="2"></line>
-                      <line x1="8" y1="8" transform="translate(10506 -3397)" fill="none" stroke="#fff" stroke-width="2"></line>
-                    </g>
-                  </svg>`;
+// const closeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+//                     <g transform="translate(-10500 3403)">
+//                       <circle cx="10" cy="10" r="10" transform="translate(10500 -3403)" fill="#707070"></circle>
+//                       <line y1="8" x2="8" transform="translate(10506 -3397)" fill="none" stroke="#fff" stroke-width="2"></line>
+//                       <line x1="8" y1="8" transform="translate(10506 -3397)" fill="none" stroke="#fff" stroke-width="2"></line>
+//                     </g>
+//                   </svg>`;
 
 function getOpts(el) {
   const optRows = [...el.querySelectorAll(':scope > div:nth-of-type(n+3)')];
@@ -66,117 +66,47 @@ function decorateStaticLinks(el) {
   textLinks.forEach((link) => { link.classList.add('static'); });
 }
 
-function addCloseButton(el) {
-  const closeBtn = createTag('button', { class: 'pill-close', 'aria-label': 'Close' }, closeSvg);
-  el.querySelector('.foreground').appendChild(closeBtn);
-  closeBtn.addEventListener('click', (e) => {
-    e.target.closest('.section').classList.add('close-sticky-section');
-  });
-}
-
-function combineTextBocks(textBlocks, iconArea, viewPort, variant) {
-  const pillConfig = {
-    default: {
-      'mobile-up': ['s', 's'],
-      'tablet-up': ['s', 's'],
-      'desktop-up': ['m', 'l'],
-    },
-    popup: {
-      'mobile-up': ['s', 's'],
-      'tablet-up': ['l', 'm'],
-      'desktop-up': ['xxl', 'xl'],
-    },
-  };
-  const textStyle = pillConfig[variant][viewPort];
-  const contentArea = createTag('p', { class: 'content-area' });
-  const textArea = createTag('p', { class: 'text-area' });
-  textBlocks[0].parentElement.prepend(contentArea);
-  textBlocks.forEach((textBlock) => {
-    textArea.appendChild(textBlock);
-    if (textBlock.nodeName === 'P') {
-      textBlock.classList.add(`body-${textStyle[1]}`);
-    } else {
-      textBlock.classList.add(`heading-${textStyle[0]}`);
-    }
-  });
-  if (iconArea) {
-    if (iconArea.innerText?.trim()) iconArea.classList.add('detail-xs');
-    iconArea.classList.add('icon-area');
-    contentArea.appendChild(iconArea);
-  }
-  contentArea.appendChild(textArea);
-}
-
-function addPill(sourceEl, parent) {
-  const newPill = sourceEl.cloneNode(true);
-  parent.appendChild(newPill);
-}
-
-function checkViewportPill(foreground) {
-  const { children, childElementCount: childCount } = foreground;
-  if (childCount < 2) addPill(children[childCount - 1], foreground);
-  if (childCount < 3) addPill(children[childCount - 1], foreground);
-}
-
-function decoratePill(el) {
-  const viewports = ['mobile-up', 'tablet-up', 'desktop-up'];
-  const foreground = el.querySelector('.foreground');
-  const variant = el.classList.contains('popup') ? 'popup' : 'default';
-  if (foreground.childElementCount !== 3) checkViewportPill(foreground);
-  [...foreground.children].forEach((child, index) => {
-    child.className = viewports[index];
-    child.classList.add('pill-text');
-    const textBlocks = [...child.children];
-    const iconArea = child.querySelector('picture')?.closest('p');
-    const actionArea = child.querySelectorAll('em a, strong a, p > a strong');
-    if (iconArea) textBlocks.shift();
-    if (actionArea.length) textBlocks.pop();
-    if (!(textBlocks.length || iconArea || actionArea.length)) child.classList.add('hide-block');
-    else if (textBlocks.length) combineTextBocks(textBlocks, iconArea, viewports[index], variant);
-  });
-  if (variant === 'popup') addCloseButton(el);
-  return foreground;
-}
-
 function decorateBorder(el, { borderBottom }) {
   const border = createTag('div', { style: `background: ${borderBottom};`, class: 'border' });
   el.appendChild(border);
 }
 
-function decorateLayout(el, opts = {}) {
+function decorateRibbon(foreground) {
+  const text = foreground.querySelector('.text');
+  if (!text) return;
+  const heading = text?.querySelector('h1, h2, h3, h4, h5, h6');
+  const icon = heading.previousElementSibling;
+  const body = heading?.nextElementSibling?.classList.contains('action-area') ? '' : heading.nextElementSibling;
+  const copy = createTag('div', { class: 'ribbon-copy' }, [heading, body]);
+  text?.insertBefore(copy, icon?.nextSibling || text.children[0]);
+}
+
+function decorateLayout(el) {
   const elems = el.querySelectorAll(':scope > div');
   if (elems.length > 1) decorateBlockBg(el, elems[0]);
   const foreground = elems[elems.length - 1];
   foreground.classList.add('foreground', 'container');
-  if (el.classList.contains(pill)) return decoratePill(el);
   const text = foreground.querySelector('h1, h2, h3, h4, h5, h6, p')?.closest('div');
   text?.classList.add('text');
   const picture = text?.querySelector('p picture');
   const iconArea = picture ? (picture.closest('p') || createTag('p', null, picture)) : null;
   iconArea?.classList.add('icon-area');
-  const foregroundImage = foreground.querySelector(':scope > div:not(.text) img')?.closest('div');
-  const bgImage = el.querySelector(':scope > div:not(.text):not(.foreground) img')?.closest('div');
-  const foregroundMedia = foreground.querySelector(':scope > div:not(.text) video, :scope > div:not(.text) a[href*=".mp4"]')?.closest('div');
-  const bgMedia = el.querySelector(':scope > div:not(.text):not(.foreground) video, :scope > div:not(.text):not(.foreground) a[href*=".mp4"]')?.closest('div');
-  const image = foregroundImage ?? bgImage;
-  const asideMedia = foregroundMedia ?? bgMedia ?? image;
-  const isSplit = el.classList.contains('split');
-  const hasMedia = foregroundImage ?? foregroundMedia ?? (isSplit && asideMedia);
-  if (!hasMedia) el.classList.add('no-media');
-  if (asideMedia && !asideMedia.classList.contains('text')) {
-    asideMedia.classList.add('image');
-  } else if (!iconArea) {
-    foreground?.classList.add('no-image');
-  }
-  if (opts.borderBottom) decorateBorder(el, opts);
+  const fgMedia = foreground.querySelector(':scope > div:not(.text) :is(img, video, a[href*=".mp4"])')?.closest('div');
+  const bgMedia = el.querySelector(':scope > div:not(.foreground) :is(img, video, a[href*=".mp4"])')?.closest('div');
+  const media = fgMedia ?? bgMedia;
+  el.classList.toggle('no-media', !media);
+  media?.classList.toggle('image', (media && !media.classList.contains('text')));
+  foreground?.classList.toggle('no-image', (!media && !iconArea));
   return foreground;
 }
 
 export default function init(el) {
   el.classList.add('con-block');
   const { fontSizes, options } = getBlockData(el);
-  const blockText = decorateLayout(el, options);
+  const blockText = decorateLayout(el);
   decorateBlockText(blockText, fontSizes);
+  if (options.borderBottom) decorateBorder(el, options);
   decorateTextOverrides(el);
   decorateStaticLinks(el);
+  if (el.classList.contains(ribbon)) decorateRibbon(blockText);
 }
