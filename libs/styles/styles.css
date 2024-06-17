@@ -508,25 +508,15 @@ svg.icon-milo, img.icon-milo {
   gap: 20px;
 }
 
-.s-lockup .lockup-area img {
-  height: var(--icon-size-s);
-}
+.s-lockup .lockup-area img { height: var(--icon-size-s); }
 
-.m-lockup .lockup-area img {
-  height: var(--icon-size-m);
-}
+.m-lockup .lockup-area img { height: var(--icon-size-m); }
 
-.l-lockup .lockup-area img {
-  height: var(--icon-size-l);
-}
+.l-lockup .lockup-area img { height: var(--icon-size-l); }
 
-.xl-lockup .lockup-area img {
-  height: var(--icon-size-xl);
-}
+.xl-lockup .lockup-area img { height: var(--icon-size-xl); }
 
-.xxl-lockup .lockup-area img {
-  height: var(--icon-size-xxl);
-}
+.xxl-lockup .lockup-area img { height: var(--icon-size-xxl); }
 
 .avatar-area {
   line-height: 0;
