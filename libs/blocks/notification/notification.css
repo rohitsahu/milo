@@ -42,6 +42,31 @@
   justify-content: flex-start;
 }
 
+.notification.ribbon .foreground.container {
+  inline-size: 100%;
+}
+
+.notification .close {
+  position: absolute;
+  inset: 0 var(--spacing-s) 0 auto;
+  block-size: 20px;
+  inline-size: 20px;
+  cursor: pointer;
+  margin: auto;
+  appearance: none;
+  border: none;
+  background: transparent;
+}
+
+.notification .close .path {
+  fill: var(--text-color);
+}
+
+.dark .notification .close .path,
+.notification.dark .close .path {
+  fill: var(--color-white);
+}
+
 .notification .border {
   display: block;
   block-size: 10px;
@@ -119,8 +144,11 @@
   margin-bottom: var(--spacing-xs);
 }
 
-.notification .foreground.container .image video,
-.notification .foreground.container .image picture,
+.notification.ribbon .foreground.container .icon-area {
+  flex-shrink: 0;
+}
+
+.notification .foreground.container .image :is(picture, video),
 .notification .foreground.container .image picture img {
   width: 100%;
   display: flex;
@@ -226,14 +254,16 @@
   }
 
   .notification:is(.full-width, .ribbon) .foreground.container {
-    inline-size: unset;
     max-inline-size: 1200px;
     margin-inline: var(--grid-margins-width);
     gap: var(--spacing-xl);
   }
 
-  .notification.max-width-10-desktop .foreground.container {
+  .notification:is(.full-width, .max-width-10-desktop) .foreground.container {
     inline-size: unset;
+  }
+
+  .notification.max-width-10-desktop .foreground.container {
     margin-inline: var(--grid-margins-width-10);
     gap: var(--spacing-l);
   }
@@ -272,5 +302,9 @@
 
   .notification .ribbon-copy {
     margin-inline-end: var(--spacing-m);
+  }
+
+  .notification.fixed .ribbon-copy {
+    flex-basis: 100%;
   }
 }
