@@ -24,11 +24,11 @@
   margin-bottom: var(--spacing-s);
 }
 
-.aside [class^="detail"] {
+.aside [class^="detail-"] {
   margin-bottom: var(--spacing-xs);
 }
 
-.aside .title {
+.aside .title-l {
   font-size: var(--type-body-m-size);
   line-height: var(--type-body-m-lh);
   font-weight: bold;

@@ -188,7 +188,6 @@ function decorateLayout(el) {
     if (el.className.includes('-lockup')) iconClass = 'lockup-area';
     iconArea.classList.add(iconClass);
   }
-  // iconArea?.classList.add(el.className.includes('-avatar') ? 'avatar-area' : 'icon-area');
   const foregroundImage = foreground.querySelector(':scope > div:not(.text) img')?.closest('div');
   const bgImage = el.querySelector(':scope > div:not(.text):not(.foreground) img')?.closest('div');
   const foregroundMedia = foreground.querySelector(':scope > div:not(.text) video, :scope > div:not(.text) a[href*=".mp4"]')?.closest('div');
@@ -223,6 +222,6 @@ export default function init(el) {
   decorateStaticLinks(el);
   formatPromoButton(el);
   decorateTextOverrides(el);
-  // Override detail with title style if class exists - Temporary solution until Spectrum 2
-  if (el.classList.contains('title')) el.querySelector('[class*="detail-"]')?.classList.add('title');
+  // Override Detail with Title L style if class exists - Temporary solution until Spectrum 2
+  if (el.classList.contains('l-title')) el.querySelector('[class*="detail-"]')?.classList.add('title-l');
 }
