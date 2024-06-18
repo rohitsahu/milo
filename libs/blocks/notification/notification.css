@@ -44,11 +44,12 @@
 
 .notification.ribbon .foreground.container {
   inline-size: 100%;
+  margin-inline: 30px;
 }
 
 .notification .close {
   position: absolute;
-  inset: 0 var(--spacing-s) 0 auto;
+  inset: var(--spacing-xxs) var(--spacing-xxs) auto auto;
   block-size: 20px;
   inline-size: 20px;
   cursor: pointer;
@@ -56,6 +57,7 @@
   appearance: none;
   border: none;
   background: transparent;
+  padding: 0;
 }
 
 .notification .close .path {
@@ -192,6 +194,11 @@
     gap: var(--spacing-xs);
   }
 
+  .notification:is(.full-width, .ribbon) .foreground.container {
+    max-inline-size: 1200px;
+    margin-inline: var(--grid-margins-width);
+  }
+
   .notification .foreground.container .image {
     margin: 0;
     width: 35%;
@@ -228,6 +235,10 @@
     margin-bottom: 0;
   }
 
+  .notification .close {
+    inset: 0 var(--spacing-s) 0 auto;
+  }
+
   .notification.ribbon .foreground.container .text {
     flex-flow: row nowrap;
     align-items: center;
@@ -254,8 +265,6 @@
   }
 
   .notification:is(.full-width, .ribbon) .foreground.container {
-    max-inline-size: 1200px;
-    margin-inline: var(--grid-margins-width);
     gap: var(--spacing-xl);
   }
 

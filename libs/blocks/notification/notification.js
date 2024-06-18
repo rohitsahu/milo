@@ -25,11 +25,15 @@ const defaultSize = medium;
 const defaultVariant = banner;
 const blockConfig = {
   [banner]: {
-    [small]: ['s', 's'],
-    [medium]: ['m', 'm'],
-    [large]: ['l', 'l'],
+    [small]: ['s', 's', 's', 'm'],
+    [medium]: ['m', 'm', 'm', 'm'],
+    [large]: ['l', 'l', 'l', 'l'],
   },
-  [ribbon]: ['m', 'm'],
+  [ribbon]: {
+    [small]: ['s', 's', 's', 'm'],
+    [medium]: ['m', 'm', 'm', 'l'],
+    [large]: ['l', 'l', 'l', 'l'],
+  },
   [pill]: {
     [small]: ['m', 'm'],
     [medium]: ['s', 's'],
