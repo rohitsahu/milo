@@ -1200,16 +1200,16 @@
   .aside.promobar.popup .promo-text .text-area {
     margin-top: 0;
   }
+}
 
-  @media screen and (max-width: 1200px) {
-    .aside[class*="-lockup"] .lockup-area {
-      font-size: var(--type-lockup-s-size);
-      letter-spacing:var(--type-lockup-s-ls);
-      gap: 8px;
-    }
+@media screen and (max-width: 1200px) {
+  .aside[class*="-lockup"] .lockup-area {
+    font-size: var(--type-lockup-s-size);
+    letter-spacing:var(--type-lockup-s-ls);
+    gap: 8px;
+  }
 
-    .aside[class*="-lockup"] .lockup-area img {
-      height: var(--icon-size-s);
-    }
+  .aside[class*="-lockup"] .lockup-area img {
+    height: var(--icon-size-s);
   }
 }

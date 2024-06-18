@@ -467,11 +467,12 @@ svg.icon-milo, img.icon-milo {
 
 .lockup-area {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--spacing-xs);
-  line-height: 0;
   margin-bottom: var(--spacing-s);
   font-weight: var(--type-lockup-all-weight);
+  line-height: 1.25em;
 }
 
 .center .lockup-area {
@@ -506,6 +507,10 @@ svg.icon-milo, img.icon-milo {
   font-size: var(--type-lockup-xxl-size);
   letter-spacing:var(--type-lockup-xxl-ls);
   gap: 20px;
+}
+
+.lockup-area > * {
+  line-height: 0;
 }
 
 .s-lockup .lockup-area img { height: var(--icon-size-s); }
