@@ -533,11 +533,6 @@
   background-color: #123456
 }
 
-.resource-form .marketo {
-  margin-left: calc(var(--grid-margins-width) * -1 / 2);
-  margin-right: calc(var(--grid-margins-width) * -1 / 2);
-}
-
 .resource-form .columns {
   max-width: unset;
 }
@@ -549,6 +544,11 @@
 .resource-form.section.two-up,
 .resource-form .columns > .row {
   grid-template-columns: 1fr;
+}
+
+.resource-form.section.two-up .marketo {
+  margin-left: calc(var(--grid-margins-width) * -1 / 2);
+  margin-right: calc(var(--grid-margins-width) * -1 / 2);
 }
 
 @media screen and (min-width: 600px) {
