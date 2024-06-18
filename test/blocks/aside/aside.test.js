@@ -58,16 +58,16 @@ describe('aside', () => {
     });
 
     it('allows Title L to override Detail', () => {
-      const el = document.querySelector('#test-title');
-      expect(el.querySelector('.detail-m.title-l')).to.exist;
+      expect(document.querySelector('#test-title .detail-m.title-l')).to.exist;
     });
 
     it('allows an avatar', () => {
-      const el = document.querySelector('#test-avatar');
-      expect(el.querySelector('.avatar-area img')).to.exist;
+      expect(document.querySelector('#test-avatar .avatar-area img')).to.exist;
     });
 
-    // it('has a product lockup'); // To Do
+    it('allows a product lockup', () => {
+      expect(document.querySelector('#test-lockup .lockup-area img')).to.exist;
+    });
   });
 
   describe('split', () => {
@@ -122,15 +122,15 @@ describe('aside', () => {
     });
 
     it('allows Title L to override Detail', () => {
-      const el = document.querySelector('#test-title');
-      expect(el.querySelector('.detail-m.title-l')).to.exist;
+      expect(document.querySelector('#test-title .detail-m.title-l')).to.exist;
     });
 
     it('allows an avatar', () => {
-      const el = document.querySelector('#test-avatar');
-      expect(el.querySelector('.avatar-area img')).to.exist;
+      expect(document.querySelector('#test-avatar .avatar-area img')).to.exist;
     });
 
-    // it('has a product lockup'); // To Do
+    it('allows a product lockup', () => {
+      expect(document.querySelector('#test-lockup .lockup-area img')).to.exist;
+    });
   });
 });
