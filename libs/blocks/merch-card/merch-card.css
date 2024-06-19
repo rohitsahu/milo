@@ -35,6 +35,11 @@ merch-card.special-offers del span[is="inline-price"] {
   text-decoration: line-through;
 }
 
+merch-card span[is="inline-price"].big-price {
+  font-size: var(--consonant-merch-card-heading-m-font-size);
+  line-height: var(--consonant-merch-card-heading-xs-line-height);
+}
+
 .dark .merch-card .con-button.outline:hover {
   color: var(--color-white);
   background-color: var(--color-black);
