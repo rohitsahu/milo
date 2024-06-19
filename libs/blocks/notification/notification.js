@@ -35,9 +35,9 @@ const blockConfig = {
     [large]: ['l', 'l', 'l', 'l'],
   },
   [pill]: {
-    [small]: ['m', 'm'],
-    [medium]: ['s', 's'],
-    [large]: ['l', 'm'],
+    [small]: ['s', 's', 's', 's'],
+    [medium]: ['m', 'm', 'm', 'm'],
+    [large]: ['l', 'm', 'm', 'l'],
   },
 };
 
@@ -64,8 +64,9 @@ function getOpts(el) {
 function getBlockData(el) {
   const variant = variants.find((varClass) => el.classList.contains(varClass)) || defaultVariant;
   const size = sizes.find((sizeClass) => el.classList.contains(sizeClass)) || defaultSize;
-  const fonts = blockConfig[variant];
-  return { fontSizes: !Array.isArray(fonts) ? fonts[size] : fonts, options: { ...getOpts(el) } };
+  const fontSizes = blockConfig[variant][size];
+  if (el.classList.contains('s-button')) fontSizes.splice(3, 1, 'm');
+  return { fontSizes, options: { ...getOpts(el) } };
 }
 
 function decorateStaticLinks(el) {

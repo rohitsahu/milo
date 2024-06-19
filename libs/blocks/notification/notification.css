@@ -185,6 +185,11 @@
   justify-content: center;
 }
 
+.notification.center .icon-area picture {
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (min-width: 600px) {
   .notification .foreground.container {
     align-items: center;
@@ -254,6 +259,10 @@
 
   .notification .ribbon-copy :last-child {
     margin-block-end: 0;
+  }
+
+  .notification.center .ribbon-copy {
+    text-align: start;
   }
 }
 
