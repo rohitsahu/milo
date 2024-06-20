@@ -214,15 +214,16 @@ const parseContent = async (el, merchCard) => {
 };
 
 const getBadgeStyle = (badgeMetadata) => {
-  const badgeStyleRegex = /^#[0-9a-fA-F]+, #[0-9a-fA-F]+$/;
+  const badgeStyleRegex = /^#[0-9a-fA-F]+, #[0-9a-fA-F]+(, #[0-9a-fA-F]+|transparent)?$/;
   if (!badgeStyleRegex.test(badgeMetadata[0]?.innerText)) return null;
-  const style = badgeMetadata[0].innerText;
-  const badgeBackgroundColor = style.split(',')[0].trim();
-  const badgeColor = style.split(',')[1].trim();
+  const style = badgeMetadata[0].innerText.split(',').map((s) => s.trim());
+  const badgeBackgroundColor = style[0];
+  const badgeColor = style[1];
+  const borderColor = style[2] !== 'none' ? style[2] : null;
   const badgeWrapper = badgeMetadata[0].parentNode;
   const badgeText = badgeMetadata[1].innerText;
   badgeWrapper.remove();
-  return { badgeBackgroundColor, badgeColor, badgeText };
+  return { badgeBackgroundColor, badgeColor, badgeText, borderColor };
 };
 
 const getActionMenuContent = (el) => {
@@ -398,6 +399,9 @@ export default async function init(el) {
         );
         merchCard.setAttribute('badge-color', badge.badgeColor);
         merchCard.setAttribute('badge-text', badge.badgeText);
+        if (badge.borderColor) {
+          merchCard.setAttribute('border-color', badge.borderColor);
+        }
         merchCard.classList.add('badge-card');
       }
     }
