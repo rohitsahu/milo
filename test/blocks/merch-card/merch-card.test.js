@@ -86,6 +86,7 @@ describe('Plans Card', () => {
     document.body.innerHTML = await readMockText('/test/blocks/merch-card/mocks/plans-card.html');
     const merchCard = await init(document.querySelector('.merch-card.plans.edu.icons.secure'));
     const heading = merchCard.querySelector('h3[slot="heading-m"]');
+    const bigPrice = merchCard.querySelector('strong span');
     const headingOne = merchCard.querySelector('h4[slot="heading-xs"]');
     const body = merchCard.querySelector('div[slot="body-xs"]');
     const detail = merchCard.querySelector('h5[slot="detail-m"]');
@@ -94,6 +95,7 @@ describe('Plans Card', () => {
 
     expect(merchCard).to.exist;
     expect(heading).to.exist;
+    expect(bigPrice).to.exist;
     expect(headingOne).to.exist;
     expect(body).to.exist;
     expect(detail).to.exist;
