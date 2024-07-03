@@ -192,6 +192,20 @@ const parseContent = async (el, merchCard) => {
           }
         }
         element.setAttribute('slot', slotName);
+        if (slotName === 'heading-xs' && tagName === 'H3') {
+          // Create the edit button
+          // Create the edit link
+          const editbutton = createTag('sp-button', { class: 'edit-button' });
+          editbutton.textContent = 'Edit';
+
+          editbutton.addEventListener('click', async () => {
+            console.log('Edit button clicked');
+          });
+
+          // Append the edit button to the element
+          element.append(editbutton);
+        }
+
         const newElement = createTag(tagName);
         Array.from(element.attributes).forEach((attr) => {
           newElement.setAttribute(attr.name, attr.value);
@@ -395,7 +409,14 @@ export default async function init(el) {
       }
     }
   }
-  const merchCard = createTag('merch-card', { class: styles.join(' '), 'data-block': '' });
+
+  await Promise.all([
+    import(`../../deps/lit-all.min.js`),
+    import(`../../features/spectrum-web-components/dist/button.js`)
+  ]);
+
+  const app = createTag('sp-theme', { color: 'light', scale: 'medium' });
+  const merchCard = createTag('merch-card', { class: styles.join(' '), 'data-block': '' }, '', { parent: app });
   merchCard.setAttribute('variant', cardType);
   merchCard.setAttribute('size', styles.find((style) => CARD_SIZES.includes(style)) || '');
   if (el.dataset.removedManifestId) {
@@ -543,7 +564,8 @@ export default async function init(el) {
   } else {
     parseTwpContent(el, merchCard);
   }
-  el.replaceWith(merchCard);
+  
+  el.replaceWith(app);
   decorateMerchCardLinkAnalytics(merchCard);
-  return merchCard;
+  return app;
 }
