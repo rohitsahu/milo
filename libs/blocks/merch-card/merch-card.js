@@ -4,6 +4,7 @@ import { getMetadata } from '../section-metadata/section-metadata.js';
 import { processTrackingLabels } from '../../martech/attributes.js';
 import { replaceKey } from '../../features/placeholders.js';
 import '../../deps/merch-card.js';
+import { ButtonWrapper } from './button-wrapper.js';
 
 const TAG_PATTERN = /^[a-zA-Z0-9_-]+:[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-].*$/;
 
@@ -194,13 +195,9 @@ const parseContent = async (el, merchCard) => {
         element.setAttribute('slot', slotName);
         if (slotName === 'heading-xs' && tagName === 'H3') {
           // Create the edit button
-          // Create the edit link
-          const editbutton = createTag('sp-button', { class: 'edit-button' });
-          editbutton.textContent = 'Edit';
+          const editbutton = createTag('custom-button', { class: 'edit-button' });
 
-          editbutton.addEventListener('click', async () => {
-            console.log('Edit button clicked');
-          });
+          console.log('Edit button created', editbutton);
 
           // Append the edit button to the element
           element.append(editbutton);
@@ -411,7 +408,7 @@ export default async function init(el) {
   }
 
   await Promise.all([
-    import(`../../deps/lit-all.min.js`),
+    import(`../../features/spectrum-web-components/dist/theme.js`),
     import(`../../features/spectrum-web-components/dist/button.js`)
   ]);
 
