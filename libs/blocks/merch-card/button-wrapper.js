@@ -25,8 +25,8 @@ export class ButtonWrapper extends LitElement {
       merchCard = merchCard.parentElement;
     }
     // Remove the Submit and Cancel buttons
-    const submitButton = merchCard.querySelector('.submit-merch-card');
-    const cancelButton = merchCard.querySelector('.cancel-merch-card');
+    const submitButton = merchCard.querySelectorAll('.submit-merch-card')[0];
+    const cancelButton = merchCard.querySelectorAll('.cancel-merch-card')[0];
     submitButton.parentNode.removeChild(submitButton);
     cancelButton.parentNode.removeChild(cancelButton);
 
@@ -35,29 +35,27 @@ export class ButtonWrapper extends LitElement {
     editButtons.forEach(button => button.parentElement.removeChild(button));
 
     const editButton = document.createElement('custom-button');
-    editButton.classList.add('edit-button');
-    const heading = merchCard.querySelector('.card-heading');
-    heading.appendChild(editButton);
+    editButton.classList.add('edit-card-button');
+    const editCardDiv = merchCard.querySelectorAll('.edit-card-div')[0];
+    editCardDiv.appendChild(editButton);
   }
 
   _cancelChange(originalMerchCard, merchCard) {
     merchCard.parentElement.replaceChild(originalMerchCard, merchCard);
-    // Get the heading of the merchCard
-    const heading = originalMerchCard.querySelector('.card-heading');
 
     // Get the Submit and Cancel buttons from the heading
-    const submitButton = heading.querySelector('.submit-merch-card');
-    const cancelButton = heading.querySelector('.cancel-merch-card');
+    const submitButton = originalMerchCard.querySelectorAll('.submit-merch-card')[0];
+    const cancelButton = originalMerchCard.querySelectorAll('.cancel-merch-card')[0];
 
     // Remove the Submit and Cancel buttons from the heading
-    if (submitButton) heading.removeChild(submitButton);
-    if (cancelButton) heading.removeChild(cancelButton);
+    if (submitButton) submitButton.parentNode.removeChild(submitButton);
+    if (cancelButton) cancelButton.parentNode.removeChild(cancelButton);
   }
   
   _clicked() {
       // Create and append the Submit button
     const submitButton = document.createElement('sp-button');
-    submitButton.variant = 'primary';
+    submitButton.variant = 'accent';
     submitButton.innerHTML = 'Submit';
     submitButton.classList.add('submit-merch-card');
     submitButton.addEventListener('click', this._submitChange.bind(this.parentElement.parentElement));
@@ -68,11 +66,7 @@ export class ButtonWrapper extends LitElement {
     cancelButton.variant = 'secondary';
     cancelButton.innerHTML = 'Cancel';
     cancelButton.classList.add('cancel-merch-card');
-    const that = this;
     cancelButton.addEventListener('click', () => this._cancelChange(this.originalMerchCard, this.merchCard));
-    // cancelButton.addEventListener('click', function() {
-    //   that._cancelChange();
-    // });
     this.parentElement.appendChild(cancelButton);
 
     let merchCard = this.parentElement;
@@ -81,22 +75,20 @@ export class ButtonWrapper extends LitElement {
     }
     this.originalMerchCard = merchCard.cloneNode(true);
     this.merchCard = merchCard;
-    console.log('Inside clicked', merchCard);
 
     const editableElements = merchCard.querySelectorAll('.editable');
     editableElements.forEach(element => {
-      // Remove any existing edit buttons
-      const existingButton = element.querySelector('.edit-button');
-      if (existingButton) {
-        element.removeChild(existingButton);
-      }
-      const button = document.createElement('sp-button');
+      const button = document.createElement('sp-button', { classList: 'edit-segment-button' });
       button.variant = 'secondary';
       button.innerHTML = 'Edit';
       button.size = 's';
       button.addEventListener('click', () => this._edit(element));
       element.appendChild(button);
     });
+
+    // Remove the edit button from the merch card footer
+    const editButton = merchCard.querySelectorAll('.edit-card-button')[0];
+    editButton.parentNode.removeChild(editButton);
   }
 
   _edit(element) {
@@ -123,33 +115,26 @@ export class ButtonWrapper extends LitElement {
   
   _addEditButton(element) {
     // Remove any existing edit buttons
-    const existingButton = element.querySelector('.edit-button');
-    if (existingButton) {
-      element.removeChild(existingButton);
-    }
+    // const existingButton = element.querySelector('.edit-segment-button');
+    // if (existingButton) {
+    //   element.removeChild(existingButton);
+    // }
 
     // Add a new edit button
-    const button = document.createElement('sp-button');
-    button.variant = 'secondary';
-    button.innerHTML = 'Edit';
-    button.size = 's';
-    button.addEventListener('click', () => this._edit(element));
+    const nodeEditButton = document.createElement('sp-button',  { classList: 'edit-segment-button' });
+    nodeEditButton.variant = 'secondary';
+    nodeEditButton.innerHTML = 'Edit';
+    nodeEditButton.size = 's';
+    nodeEditButton.addEventListener('click', () => this._edit(element));
     // const nodeEditButton = document.createElement('sp-icon-edit-in-light');
     // nodeEditButton.addEventListener('click', () => this._edit(element));
     element.appendChild(nodeEditButton);
   }
 
-  _removeEditButton(element) {
-    const editButton = element.querySelector('.edit-button');
-    if (editButton) {
-      element.removeChild(editButton);
-    }
-  }
-
   render() {
-    const edit = "Edit";
+    const edit = "Edit Card";
     return html`
-    <sp-button treatment="outline" variant="primary" style="position: absolute; right: 16px; top: 16px;"  @click=${this._clicked}>${edit}</sp-button>`;
+    <sp-button treatment="outline" variant="primary"  @click=${this._clicked}>${edit}</sp-button>`;
   }
 
 }

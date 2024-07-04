@@ -194,15 +194,6 @@ const parseContent = async (el, merchCard) => {
           }
         }
         element.setAttribute('slot', slotName);
-        if (slotName === 'heading-xs' && tagName === 'H3') {
-          // Create the edit button
-          const editbutton = createTag('custom-button', { class: 'edit-button' });
-
-          console.log('Edit button created', editbutton);
-
-          // Append the edit button to the element
-          element.append(editbutton);
-        }
 
         const newElement = createTag(tagName);
         Array.from(element.attributes).forEach((attr) => {
@@ -421,6 +412,7 @@ export default async function init(el) {
   if (el.dataset.removedManifestId) {
     merchCard.dataset.removedManifestId = el.dataset.removedManifestId;
   }
+
   let tags = {};
   if (el.lastElementChild?.previousElementSibling?.querySelector('h3,h4,h5,h6')) {
     // tag section is available
@@ -528,10 +520,25 @@ export default async function init(el) {
     parseContent(el, merchCard);
 
     const footer = createTag('div', { slot: 'footer' });
+    const editCardDiv = createTag('div', { class: 'edit-card-div', style: 'display: flex; gap: 16px;'});
+    const hr = document.createElement('hr');
+    hr.style.width = '100%';
+    const editbutton = createTag('custom-button', { class: 'edit-card-button' });
+    editCardDiv.append(editbutton);
+    const ctasDiv = createTag('div');
+    ctasDiv.style.width = '100%';
+    ctasDiv.style.display = 'flex';
+    ctasDiv.style.justifyContent = 'flex-end';
+    ctasDiv.style.gap = '16px';
+    
     if (ctas) {
       decorateButtons(ctas, (merchCard.variant === MINI_COMPARE_CHART) ? 'button-l' : undefined);
-      footer.append(ctas);
+      ctasDiv.append(ctas);
     }
+
+    footer.append(ctasDiv);
+    footer.append(hr);
+    footer.append(editCardDiv);
     merchCard.appendChild(footer);
 
     if (MULTI_OFFER_CARDS.includes(cardType)) {
