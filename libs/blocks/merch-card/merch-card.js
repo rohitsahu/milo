@@ -410,7 +410,8 @@ export default async function init(el) {
 
   await Promise.all([
     import(`../../features/spectrum-web-components/dist/theme.js`),
-    import(`../../features/spectrum-web-components/dist/button.js`)
+    import(`../../features/spectrum-web-components/dist/button.js`),
+    import(`../../features/spectrum-web-components/dist/icons-workflow.js`),
   ]);
 
   const app = createTag('sp-theme', { color: 'light', scale: 'medium' });
