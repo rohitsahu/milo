@@ -16,7 +16,7 @@ export class ButtonWrapper extends LitElement {
     // console.log("helix", WebImporter.html2md);
   }
 
-  _submitChange() {
+  async _submitChange() {
     console.log('Inside submit');
     // Persist the modified merch card and send to the server
 
@@ -39,6 +39,14 @@ export class ButtonWrapper extends LitElement {
     editButton.classList.add('edit-card-button');
     const editCardDiv = merchCard.querySelectorAll('.edit-card-div')[0];
     editCardDiv.appendChild(editButton);
+    console.log('Inside clicked');
+
+    const docHtml = document.documentElement.outerHTML;
+    //const docHtml = doc;
+    const out = await WebImporter.html2docx(window.location.href, docHtml, null, {
+      createDocumentFromString: this.createDocumentFromString,
+    });
+    console.log(out.md);
   }
 
   _cancelChange(originalMerchCard, merchCard) {
@@ -59,11 +67,6 @@ export class ButtonWrapper extends LitElement {
   }
 
   async _clicked() {
-    console.log('Inside clicked');
-    const out = await WebImporter.html2docx(window.location.href, doc, null, {
-      createDocumentFromString: this.createDocumentFromString,
-    });
-    console.log(out.md);
       // Create and append the Submit button
     const submitButton = document.createElement('sp-button');
     submitButton.variant = 'accent';
