@@ -1,6 +1,7 @@
 
 import { html, LitElement } from "../../deps/lit-all.min.js";
 import doc from "./testData.js";
+import { updateDoc } from "./updateDoc.js";
 
 export class ButtonWrapper extends LitElement {
   
@@ -47,6 +48,7 @@ export class ButtonWrapper extends LitElement {
       createDocumentFromString: this.createDocumentFromString,
     });
     console.log(out.md);
+    updateDoc(out.docx);
   }
 
   _cancelChange(originalMerchCard, merchCard) {
