@@ -1,7 +1,7 @@
 
 import { html, LitElement } from "../../deps/lit-all.min.js";
 import doc from "./testData.js";
-import { updateDoc } from "./updateDoc.js";
+import { updateDoc } from "./network_util/doc_api_caller.js";
 
 export class ButtonWrapper extends LitElement {
   
@@ -43,12 +43,15 @@ export class ButtonWrapper extends LitElement {
     console.log('Inside clicked');
 
     const docHtml = document.documentElement.outerHTML;
-    //const docHtml = doc;
-    const out = await WebImporter.html2docx(window.location.href, docHtml, null, {
-      createDocumentFromString: this.createDocumentFromString,
-    });
-    console.log(out.md);
-    updateDoc(out.docx);
+    try {
+      const out = await WebImporter.html2docx(window.location.href, docHtml, null, {
+        createDocumentFromString: this.createDocumentFromString,
+      });
+      console.log(out.md);
+      updateDoc(out.docx);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   _cancelChange(originalMerchCard, merchCard) {
