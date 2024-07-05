@@ -1,6 +1,6 @@
 
-import { html, LitElement, state } from "../../deps/lit-all.min.js";
-//import * as button from "../../features/spectrum-web-components/dist/button.js"
+import { html, LitElement } from "../../deps/lit-all.min.js";
+import doc from "./testData.js";
 
 export class ButtonWrapper extends LitElement {
   
@@ -13,6 +13,7 @@ export class ButtonWrapper extends LitElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    // console.log("helix", WebImporter.html2md);
   }
 
   _submitChange() {
@@ -52,7 +53,17 @@ export class ButtonWrapper extends LitElement {
     if (cancelButton) cancelButton.parentNode.removeChild(cancelButton);
   }
   
-  _clicked() {
+  createDocumentFromString(html) {
+    const { document } = new JSDOM(html, { runScripts: undefined }).window;
+    return document;
+  }
+
+  async _clicked() {
+    console.log('Inside clicked');
+    const out = await WebImporter.html2docx(window.location.href, doc, null, {
+      createDocumentFromString: this.createDocumentFromString,
+    });
+    console.log(out.md);
       // Create and append the Submit button
     const submitButton = document.createElement('sp-button');
     submitButton.variant = 'accent';
