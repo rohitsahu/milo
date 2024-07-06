@@ -34,7 +34,7 @@ export class ButtonWrapper extends LitElement {
     cancelButton.parentNode.removeChild(cancelButton);
 
     // Remove the Edit buttons from the individual card elements
-    const editButtons = merchCard.querySelectorAll('sp-button[variant="secondary"]');
+    const editButtons = merchCard.querySelectorAll('.edit-segment-button');
     editButtons.forEach(button => button.parentElement.removeChild(button));
 
     const editButton = document.createElement('custom-button');
@@ -124,7 +124,8 @@ export class ButtonWrapper extends LitElement {
   }
 
   _createEditButton() {
-    const button = document.createElement('button', { classList: 'edit-segment-button' });
+    const button = document.createElement('button');
+    button.classList.add('edit-segment-button');
     button.style.backgroundColor = 'transparent'; // Remove background color
     button.style.border = 'none'; // Remove border
     button.innerHTML = '&#9998;'; // Pencil icon
@@ -140,8 +141,16 @@ export class ButtonWrapper extends LitElement {
     this.isEditing = true;
     this.originalText = element.textContent;
     
-    const links = element.querySelectorAll('a');
+    const links = Array.from(element.querySelectorAll('a'));
+    this.originalClasses = links.map(link => link.className); // Store the original classes
+
     if (links.length > 0) {
+        // Remove flex display while editing
+        const parentDiv = element.parentElement;
+        if (parentDiv.style.display === 'flex') {
+            this.originalDisplay = 'flex';
+            parentDiv.style.display = 'block';
+        }
         // If the element contains links, replace each link with two textboxes
         links.forEach(link => {
             const originalText = link.textContent.trim();
@@ -170,11 +179,19 @@ export class ButtonWrapper extends LitElement {
 
     // Handle multiple links
     const newHtml = textInputs.map((textInput, index) => {
-        const text = textInput.value;
-        const url = urlInputs[index].value;
-        return `<a href="${url}">${text}</a>`;
-    }).join(' | ');
+      const text = textInput.value;
+      const url = urlInputs[index].value;
+      const originalClass = this.originalClasses[index]; // Use the stored original classes
+      return `<a href="${url}" class="${originalClass}">${text}</a>`;
+    }).join(' ');
+
     element.innerHTML = newHtml;
+    // Add back the original display style when done editing
+    const parentDiv = element.parentElement;
+    if (this.originalDisplay) {
+        parentDiv.style.display = this.originalDisplay;
+        this.originalDisplay = null;
+    }
 
     this._addEditButton(element); // Add the edit button to the element
   }
