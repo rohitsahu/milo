@@ -62,7 +62,7 @@ const getContext = async () => {
 --data '@/Users/ambsingh/Downloads/response4.docx'
  */
 let retryCount = 0;
-const updateDoc =  async (file) => {
+export const updateDoc =  async (file) => {
   const url = "https://adobe-my.sharepoint.com/personal/" + site + "/_api/web/GetFolderByServerRelativeUrl("+ folder +")/Files("+ file +")/$value";
   const formdata = new FormData();
   formdata.append("file", file, file.name);
