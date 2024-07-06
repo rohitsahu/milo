@@ -208,8 +208,10 @@ export class ButtonWrapper extends LitElement {
     const textContent = newElement.querySelector('.text-content').value;
     newElement.textContent = textContent;
     this._addEditButton(newElement);
+    this._addAddButton(newElement);
+    this._addRemoveButton(newElement);
     element.parentElement.insertBefore(newElement, element.nextSibling);
-}
+  }
 
   _cancelAdd(newElement) {
       newElement.remove();
@@ -311,6 +313,18 @@ export class ButtonWrapper extends LitElement {
     const nodeEditButton = this._createEditButton();
     nodeEditButton.addEventListener('click', () => this._edit(element));
     element.appendChild(nodeEditButton);
+  }
+
+  _addAddButton(element) {
+    const addButton = this._createAddButton();
+    addButton.addEventListener('click', () => this._add(element));
+    element.appendChild(addButton);
+  }
+
+  _addRemoveButton(element) {
+    const removeButton = this._createRemoveButton();
+    removeButton.addEventListener('click', () => this._remove(element));
+    element.appendChild(removeButton);
   }
 
   render() {
