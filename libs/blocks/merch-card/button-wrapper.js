@@ -37,6 +37,14 @@ export class ButtonWrapper extends LitElement {
     const editButtons = merchCard.querySelectorAll('.edit-segment-button');
     editButtons.forEach(button => button.parentElement.removeChild(button));
 
+    // Remove the Add buttons from the individual card elements
+    const addButtons = merchCard.querySelectorAll('.add-button');
+    addButtons.forEach(button => button.parentElement.removeChild(button));
+
+    // Remove the Remove buttons from the individual card elements
+    const removeButtons = merchCard.querySelectorAll('.remove-button');
+    removeButtons.forEach(button => button.parentElement.removeChild(button));
+
     const editButton = document.createElement('custom-button');
     editButton.classList.add('edit-card-button');
     const editCardDiv = merchCard.querySelectorAll('.edit-card-div')[0];
@@ -118,9 +126,97 @@ export class ButtonWrapper extends LitElement {
       element.appendChild(button);
     });
 
+    const addableElements = merchCard.querySelectorAll('.addable');
+    addableElements.forEach(element => {
+        const addButton = this._createAddButton(); // Plus icon
+        addButton.addEventListener('click', () => this._add(element));
+        element.appendChild(addButton);
+    });
+
+    const removableElements = merchCard.querySelectorAll('.removable');
+    removableElements.forEach(element => {
+        const removeButton = this._createRemoveButton(); // Minus icon
+        removeButton.addEventListener('click', () => this._remove(element));
+        element.appendChild(removeButton);
+    });
+
     // Remove the edit button from the merch card footer
     const editButton = merchCard.querySelectorAll('.edit-card-button')[0];
     editButton.parentNode.removeChild(editButton);
+  }
+
+  _createAddButton() {
+    const button = document.createElement('button');
+    button.classList.add('add-button');
+    button.style.backgroundColor = 'transparent'; // Remove background color
+    button.style.border = 'none'; // Remove border
+    button.innerHTML = '&#8853;'; // Plus icon
+    button.style.scale = '1.4'; // Scale the icon
+    button.style.color = 'green'; // Change the color to green
+    button.style.paddingLeft = '2px'; // Add padding to the left
+    return button;
+  }
+
+  _createRemoveButton() {
+      const button = document.createElement('button');
+      button.classList.add('remove-button');
+      button.style.backgroundColor = 'transparent'; // Remove background color
+      button.style.border = 'none'; // Remove border
+      button.innerHTML = '&#8854;'; // Minus icon
+      button.style.scale = '1.4'; // Scale the icon
+      button.style.color = 'red'; // Change the color to green
+      button.style.padding = '0px';
+      return button;
+  }
+
+  _add(element) {
+    const newElement = element.cloneNode(true);
+    newElement.contentEditable = 'true';
+
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.className = 'text-content';
+
+    const saveButton = document.createElement('button');
+    saveButton.className = 'add-save-btn';
+    saveButton.style.color = 'green';
+    saveButton.style.padding = '0px';
+    saveButton.style.backgroundColor = 'transparent';
+    saveButton.style.border = 'none';
+    saveButton.textContent = '✓';
+
+    const cancelButton = document.createElement('button');
+    cancelButton.className = 'add-cancel-btn';
+    cancelButton.style.color = 'red';
+    cancelButton.style.padding = '0px';
+    cancelButton.style.backgroundColor = 'transparent';
+    cancelButton.style.border = 'none';
+    cancelButton.textContent = '✕';
+
+    newElement.textContent = '';
+    newElement.appendChild(inputField);
+    newElement.appendChild(saveButton);
+    newElement.appendChild(cancelButton);
+
+    saveButton.addEventListener('click', () => this._confirmAdd(newElement, element));
+    cancelButton.addEventListener('click', () => this._cancelAdd(newElement));
+
+    element.parentElement.insertBefore(newElement, element.nextSibling);
+}
+
+  _confirmAdd(newElement, element) {
+    const textContent = newElement.querySelector('.text-content').value;
+    newElement.textContent = textContent;
+    this._addEditButton(newElement);
+    element.parentElement.insertBefore(newElement, element.nextSibling);
+}
+
+  _cancelAdd(newElement) {
+      newElement.remove();
+  }
+
+  _remove(element) {
+      element.parentElement.removeChild(element);
   }
 
   _createEditButton() {
