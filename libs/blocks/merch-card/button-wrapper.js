@@ -1,6 +1,7 @@
 
-import { html, LitElement, state } from "../../deps/lit-all.min.js";
-//import * as button from "../../features/spectrum-web-components/dist/button.js"
+import { html, LitElement } from "../../deps/lit-all.min.js";
+import doc from "./testData.js";
+import { updateDoc } from "./network_util/doc_api_caller.js";
 
 export class ButtonWrapper extends LitElement {
   
@@ -13,9 +14,10 @@ export class ButtonWrapper extends LitElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    // console.log("helix", WebImporter.html2md);
   }
 
-  _submitChange() {
+  async _submitChange() {
     console.log('Inside submit');
     // Persist the modified merch card and send to the server
 
@@ -38,6 +40,18 @@ export class ButtonWrapper extends LitElement {
     editButton.classList.add('edit-card-button');
     const editCardDiv = merchCard.querySelectorAll('.edit-card-div')[0];
     editCardDiv.appendChild(editButton);
+    console.log('Inside clicked');
+
+    const docHtml = document.documentElement.outerHTML;
+    try {
+      const out = await WebImporter.html2docx(window.location.href, docHtml, null, {
+        createDocumentFromString: this.createDocumentFromString,
+      });
+      console.log(out.md);
+      updateDoc(out.docx);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   _cancelChange(originalMerchCard, merchCard) {
@@ -52,7 +66,12 @@ export class ButtonWrapper extends LitElement {
     if (cancelButton) cancelButton.parentNode.removeChild(cancelButton);
   }
   
-  _clicked() {
+  createDocumentFromString(html) {
+    const { document } = new JSDOM(html, { runScripts: undefined }).window;
+    return document;
+  }
+
+  async _clicked() {
       // Create and append the Submit button
     const submitButton = document.createElement('sp-button');
     submitButton.variant = 'accent';

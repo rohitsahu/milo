@@ -5,6 +5,8 @@ const site = "ambsingh_adobe_com";
 let requestDigest = "";
 export const getDoc = async () => {
   const url = "https://adobe-my.sharepoint.com/personal/"+ site +"/_api/web/GetFolderByServerRelativeUrl('"+ folder +"')/Files('" + filename + "')/$value";
+
+  //const url = "https://adobe-my.sharepoint.com/personal/ambsingh_adobe_com/_api/web/GetFolderByServerRelativeUrl('Documents')/Files('InnovateX3.docx')/$value";
   const options = {
     method:"GET",
     credentials: 'include',
@@ -65,11 +67,12 @@ const updateDoc =  async (file) => {
   const formdata = new FormData();
   formdata.append("file", file, file.name);
   const options = {
-    method:"POST",
+    method:"PUT",
     headers: {
-      "Cookie" : cookie,
-      "X-RequestDigest":requestDigest,
-      "Content-Type": "application/octet-stream",
+      'Cookie' : cookie,
+      'X-RequestDigest' :requestDigest,
+      'Content-Type': "application/octet-stream",
+      'Content-Range': `bytes 0-${content.length-1}/${content.length}`
     },
     body: formdata
   }
@@ -89,4 +92,4 @@ const updateDoc =  async (file) => {
   } catch(error) {
     console.error(`Fetch error while updating document: ${error}`);
   }
-};
+}
