@@ -673,6 +673,10 @@ merch-card [slot='callout-text'] {
     color: var(--consonant-merch-card-callout-font-color);
 }
 
+.edit-segment-button:hover {
+    border: 1px solid grey;
+  }
+
 merch-card [slot='callout-text'] img {
     position: absolute;
     top: var(--consonant-merch-card-callout-icon-top);

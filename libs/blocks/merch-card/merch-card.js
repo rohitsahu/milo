@@ -204,6 +204,7 @@ const parseContent = async (el, merchCard) => {
       }
       return;
     } else if (tagName ==='H6' && element.firstElementChild?.tagName === 'EM') {
+      element.classList.add('editable');
       const calloutSlot = createTag('div', { slot: 'callout-text' });
       const calloutContentWrapper = createTag('div', { class: 'callout-content-wrapper' });
       const calloutContent = createTag('div', { class: 'callout-content' });
@@ -236,6 +237,7 @@ const parseContent = async (el, merchCard) => {
       return;
     }
     if (isParagraphTag(tagName)) {
+      element.classList.add('editable');
       bodySlot.append(element);
       merchCard.append(bodySlot);
     }

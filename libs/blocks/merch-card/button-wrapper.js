@@ -10,6 +10,7 @@ export class ButtonWrapper extends LitElement {
 
   originalMerchCard = null;
   merchCard = null;
+  originalElementHtml = '';
 
   constructor() {
     super();
@@ -48,6 +49,21 @@ export class ButtonWrapper extends LitElement {
         createDocumentFromString: this.createDocumentFromString,
       });
       console.log(out.md);
+      // Create a Blob from the docx data
+      const blob = new Blob([out.docx], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+
+      // Create a URL representing the Blob
+      const url = URL.createObjectURL(blob);
+
+      // Create a download link and click it
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'output.docx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log('Downloaded url is,', url);
+      
       updateDoc(out.docx);
     } catch (error) {
       console.error(error);
@@ -97,10 +113,7 @@ export class ButtonWrapper extends LitElement {
 
     const editableElements = merchCard.querySelectorAll('.editable');
     editableElements.forEach(element => {
-      const button = document.createElement('sp-button', { classList: 'edit-segment-button' });
-      button.variant = 'secondary';
-      button.innerHTML = 'Edit';
-      button.size = 's';
+      const button = this._createEditButton(); // Pencil icon
       button.addEventListener('click', () => this._edit(element));
       element.appendChild(button);
     });
@@ -110,16 +123,62 @@ export class ButtonWrapper extends LitElement {
     editButton.parentNode.removeChild(editButton);
   }
 
-  _edit(element) {
-    this.isEditing = true;
-    this.originalText = element.textContent.replace(/Edit\s*$/, '').trim();
-    element.innerHTML = `<input type="text" value="${this.originalText}">
-                         <button class="save-btn">Save</button>
-                         <button class="cancel-btn">Cancel</button>`;
-    element.querySelector('.save-btn').addEventListener('click', () => this._save(element));
-    element.querySelector('.cancel-btn').addEventListener('click', () => this._cancel(element));
+  _createEditButton() {
+    const button = document.createElement('button', { classList: 'edit-segment-button' });
+    button.style.backgroundColor = 'transparent'; // Remove background color
+    button.style.border = 'none'; // Remove border
+    button.innerHTML = '&#9998;'; // Pencil icon
+    button.style.transform = 'rotate(90deg)'; // Rotate the icon
+    button.style.scale = '1.4'; // Scale the icon
+    return button;
   }
 
+  _edit(element) {
+    element.removeChild(element.querySelector('button'));
+    this.originalElementHtml = element.innerHTML;
+    
+    this.isEditing = true;
+    this.originalText = element.textContent;
+    
+    const links = element.querySelectorAll('a');
+    if (links.length > 0) {
+        // If the element contains links, replace each link with two textboxes
+        links.forEach(link => {
+            const originalText = link.textContent.trim();
+            const originalHref = link.href;
+            link.outerHTML = `<input type="text" class="text-content" value="${originalText}">
+                                <input type="text" class="link-url" value="${originalHref}">`;
+        });
+        element.innerHTML += `<button class="save-btn" style="color: green; padding: 0px; background-color: transparent; border: none;">&#10003;</button>
+                                <button class="cancel-btn" style="color: red; padding: 0px; background-color: transparent; border: none;">&#10005;</button>`;
+        element.querySelector('.save-btn').addEventListener('click', () => this._saveLinks(element));
+        element.querySelector('.cancel-btn').addEventListener('click', () => this._cancel(element));
+    } else {
+        // If the element does not contain links, show one textbox
+        element.innerHTML = `<input type="text" value="${this.originalText}">
+                              <button class="save-btn" style="color: green; padding: 0px; background-color: transparent; border: none;">&#10003;</button>
+                              <button class="cancel-btn" style="color: red; padding: 0px; background-color: transparent; border: none;">&#10005;</button>`;
+        element.querySelector('.save-btn').addEventListener('click', () => this._save(element));
+        element.querySelector('.cancel-btn').addEventListener('click', () => this._cancel(element));
+    }
+  }
+
+  _saveLinks(element) {
+    this.isEditing = false;
+    const textInputs = Array.from(element.querySelectorAll('.text-content'));
+    const urlInputs = Array.from(element.querySelectorAll('.link-url'));
+
+    // Handle multiple links
+    const newHtml = textInputs.map((textInput, index) => {
+        const text = textInput.value;
+        const url = urlInputs[index].value;
+        return `<a href="${url}">${text}</a>`;
+    }).join(' | ');
+    element.innerHTML = newHtml;
+
+    this._addEditButton(element); // Add the edit button to the element
+  }
+  
   _save(element) {
     this.isEditing = false;
     element.textContent = element.querySelector('input').value;
@@ -128,25 +187,16 @@ export class ButtonWrapper extends LitElement {
   
   _cancel(element) {
     this.isEditing = false;
-    element.textContent = this.originalText;
+    //element.textContent = this.originalText;
+    element.innerHTML = this.originalElementHtml;
     this._addEditButton(element); // Add the edit button to the element
   }
   
   _addEditButton(element) {
-    // Remove any existing edit buttons
-    // const existingButton = element.querySelector('.edit-segment-button');
-    // if (existingButton) {
-    //   element.removeChild(existingButton);
-    // }
 
     // Add a new edit button
-    const nodeEditButton = document.createElement('sp-button',  { classList: 'edit-segment-button' });
-    nodeEditButton.variant = 'secondary';
-    nodeEditButton.innerHTML = 'Edit';
-    nodeEditButton.size = 's';
+    const nodeEditButton = this._createEditButton();
     nodeEditButton.addEventListener('click', () => this._edit(element));
-    // const nodeEditButton = document.createElement('sp-icon-edit-in-light');
-    // nodeEditButton.addEventListener('click', () => this._edit(element));
     element.appendChild(nodeEditButton);
   }
 
