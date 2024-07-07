@@ -233,7 +233,8 @@ export class ButtonWrapper extends LitElement {
   }
 
   _edit(element) {
-    element.removeChild(element.querySelector('button'));
+    const buttons = Array.from(element.querySelectorAll('button'));
+    buttons.forEach(button => element.removeChild(button));
     this.originalElementHtml = element.innerHTML;
     
     this.isEditing = true;
@@ -298,6 +299,8 @@ export class ButtonWrapper extends LitElement {
     this.isEditing = false;
     element.textContent = element.querySelector('input').value;
     this._addEditButton(element); // Add the edit button to the element
+    this._addAddButton(element);
+    this._addRemoveButton(element);
   }
   
   _cancel(element) {
@@ -305,6 +308,8 @@ export class ButtonWrapper extends LitElement {
     //element.textContent = this.originalText;
     element.innerHTML = this.originalElementHtml;
     this._addEditButton(element); // Add the edit button to the element
+    this._addAddButton(element);
+    this._addRemoveButton(element);
   }
   
   _addEditButton(element) {
