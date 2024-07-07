@@ -66,7 +66,7 @@ export class ButtonWrapper extends LitElement {
       // Create a download link and click it
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'output.docx';
+      link.download = 'plan.docx';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
