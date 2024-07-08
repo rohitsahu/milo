@@ -176,6 +176,7 @@ export class ButtonWrapper extends LitElement {
     const inputField = document.createElement('input');
     inputField.type = 'text';
     inputField.className = 'text-content';
+    inputField.style.width = '200px';
 
     const saveButton = document.createElement('button');
     saveButton.className = 'add-save-btn';
@@ -254,8 +255,8 @@ export class ButtonWrapper extends LitElement {
         links.forEach(link => {
             const originalText = link.textContent.trim();
             const originalHref = link.href;
-            link.outerHTML = `<input type="text" class="text-content" value="${originalText}">
-                                <input type="text" class="link-url" value="${originalHref}">`;
+            link.outerHTML = `<input type="text" class="text-content" value="${originalText}" style="width:200px;">
+                                <input type="text" class="link-url" value="${originalHref}" style="width:200px;">`;
         });
         element.innerHTML += `<button class="save-btn" style="color: green; padding: 0px; background-color: transparent; border: none;">&#10003;</button>
                                 <button class="cancel-btn" style="color: red; padding: 0px; background-color: transparent; border: none;">&#10005;</button>`;
@@ -263,7 +264,7 @@ export class ButtonWrapper extends LitElement {
         element.querySelector('.cancel-btn').addEventListener('click', () => this._cancel(element));
     } else {
         // If the element does not contain links, show one textbox
-        element.innerHTML = `<input type="text" value="${this.originalText}">
+        element.innerHTML = `<input type="text" value="${this.originalText}" style="width:200px;">
                               <button class="save-btn" style="color: green; padding: 0px; background-color: transparent; border: none;">&#10003;</button>
                               <button class="cancel-btn" style="color: red; padding: 0px; background-color: transparent; border: none;">&#10005;</button>`;
         element.querySelector('.save-btn').addEventListener('click', () => this._save(element));
