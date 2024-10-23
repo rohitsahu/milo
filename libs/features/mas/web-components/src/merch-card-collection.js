@@ -298,11 +298,11 @@ export class MerchCardCollection extends LitElement {
                     >${sortText}:
                     ${alphabetical ? alphabeticallyText : popularityText}</span
                 >
-                <sp-menu-item value="${SORT_ORDER.authored}"
-                    >${popularityText}</sp-menu-item
+                <sp-menu-item id="sp-menu-item-authored" value="${SORT_ORDER.authored}"
+                    role="menuitemradio" aria-checked="${!alphabetical}">${popularityText}</sp-menu-item
                 >
-                <sp-menu-item value="${SORT_ORDER.alphabetical}"
-                    >${alphabeticallyText}</sp-menu-item
+                <sp-menu-item id="sp-menu-item-alphabetical" value="${SORT_ORDER.alphabetical}"
+                    role="menuitemradio" aria-checked="${alphabetical}">${alphabeticallyText}</sp-menu-item
                 >
             </sp-action-menu>
         `;
