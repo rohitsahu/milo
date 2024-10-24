@@ -318,6 +318,7 @@ export class MerchCardCollection extends LitElement {
     }
     
     onKeyDown(event) {
+        console.log('key down pressed, event: ', event);
         const menu = this.shadowRoot.getElementById('sortButton');
         const items = Array.from(menu.querySelectorAll('sp-menu-item'));
         const currentIndex = items.findIndex((item) =>
@@ -326,14 +327,17 @@ export class MerchCardCollection extends LitElement {
     
         if (event.key === 'ArrowDown') {
             const nextIndex = (currentIndex + 1) % items.length;
+            console.log('nextIndex: ', nextIndex);
             this.updateActiveDescendant(menu, items[nextIndex]);
         } else if (event.key === 'ArrowUp') {
             const prevIndex = (currentIndex - 1 + items.length) % items.length;
+            console.log('prevIndex: ', prevIndex);
             this.updateActiveDescendant(menu, items[prevIndex]);
         }
     }
     
     updateActiveDescendant(menu, activeItem) {
+        console.log('activeItem: ', activeItem);
         menu.setAttribute('aria-activedescendant', activeItem.id);
         activeItem.setAttribute('aria-checked', 'true');
         activeItem.focus();
