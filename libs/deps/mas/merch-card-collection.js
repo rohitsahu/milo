@@ -109,7 +109,7 @@ import{html as l,LitElement as N}from"../lit-all.min.js";var m=class{constructor
             <sp-theme theme="spectrum" color="light" scale="medium">
                 ${this.showMoreButton}
             </sp-theme>
-        </div>`}get resultTextSlotName(){return O[this.search?this.mobileAndTablet.matches?"mobile":"desktop":"filters"][Math.min(this.resultCount,2)]}get showMoreButton(){if(this.hasMore)return l`<sp-button
+        </div>`}get resultTextSlotName(){return v[this.search?this.mobileAndTablet.matches?"mobile":"desktop":"filters"][Math.min(this.resultCount,2)]}get showMoreButton(){if(this.hasMore)return l`<sp-button
             variant="secondary"
             treatment="outline"
             style="order: 1000;"
