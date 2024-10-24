@@ -132,20 +132,31 @@ import{html as l,LitElement as N}from"../lit-all.min.js";var m=class{constructor
             <sp-action-menu
                 id="sortButton"
                 size="m"
-                @change="${this.sortChanged}"
                 selects="single"
-                value="${i?n.alphabetical:n.authored}
+                @keydown="${this.onKeyDown}"
                 aria-activedescendant="${i?"sp-menu-item-alphabetical":"sp-menu-item-authored"}"
             >
                 <span slot="label-only"
                     >${e}:
-                    ${i?o:t}</span
+                    ${i?s:t}</span
                 >
-                <sp-menu-item id="sp-menu-item-authored" value="${n.authored}"
-                    role="menuitemradio" aria-checked="${!i}">${t}</sp-menu-item
+                <sp-menu-item
+                    id="sp-menu-item-authored"
+                    value="${h.authored}"
+                    role="menuitemradio"
+                    aria-checked="${!i}"
+                    tabindex="0"
                 >
-                <sp-menu-item id="sp-menu-item-alphabetical" value="${n.alphabetical}"
-                    role="menuitemradio" aria-checked="${i}">${o}</sp-menu-item
+                    ${t}
+                </sp-menu-item>
+                <sp-menu-item
+                    id="sp-menu-item-alphabetical"
+                    value="${h.alphabetical}"
+                    role="menuitemradio"
+                    aria-checked="${i}"
+                    tabindex="0"
                 >
+                    ${s}
+                </sp-menu-item>
             </sp-action-menu>
-        `}sortChanged(e){e.target.value===n.authored?p({sort:void 0}):p({sort:e.target.value}),this.dispatchEvent(new CustomEvent(x,{bubbles:!0,composed:!0,detail:{value:e.target.value}}))}async showMore(){this.dispatchEvent(new CustomEvent(g,{bubbles:!0,composed:!0}));let e=this.page+1;p({page:e}),this.page=e,await this.updateComplete}startDeeplink(){this.stopDeeplink=T(({category:e,filter:t,types:o,sort:i,search:c,single_app:h,page:d})=>{t=t||e,!this.filtered&&t&&t!==this.filter&&setTimeout(()=>{p({page:void 0}),this.page=1},1),this.filtered||(this.filter=t??this.filter),this.types=o??"",this.search=c??"",this.singleApp=h,this.sort=i,this.page=Number(d)||1})}openFilters(e){this.sidenav?.showModal(e)}static styles=[S]};E.SortOrder=n;customElements.define(M,E);export{E as MerchCardCollection};
+        `}onKeyDown(e){let t=this.shadowRoot.getElementById("sortButton"),s=Array.from(t.querySelectorAll("sp-menu-item")),i=s.findIndex(n=>n.id===t.getAttribute("aria-activedescendant"));if(e.key==="ArrowDown"){let n=(i+1)%s.length;this.updateActiveDescendant(t,s[n])}else if(e.key==="ArrowUp"){let n=(i-1+s.length)%s.length;this.updateActiveDescendant(t,s[n])}}updateActiveDescendant(e,t){e.setAttribute("aria-activedescendant",t.id),t.setAttribute("aria-checked","true"),t.focus()}sortChanged(e){e.target.value===h.authored?d({sort:void 0}):d({sort:e.target.value}),this.dispatchEvent(new CustomEvent(T,{bubbles:!0,composed:!0,detail:{value:e.target.value}}))}async showMore(){this.dispatchEvent(new CustomEvent(g,{bubbles:!0,composed:!0}));let e=this.page+1;d({page:e}),this.page=e,await this.updateComplete}startDeeplink(){this.stopDeeplink=x(({category:e,filter:t,types:s,sort:i,search:n,single_app:c,page:p})=>{t=t||e,!this.filtered&&t&&t!==this.filter&&setTimeout(()=>{d({page:void 0}),this.page=1},1),this.filtered||(this.filter=t??this.filter),this.types=s??"",this.search=n??"",this.singleApp=c,this.sort=i,this.page=Number(p)||1})}openFilters(e){this.sidenav?.showModal(e)}static styles=[A]};E.SortOrder=h;customElements.define(M,E);export{E as MerchCardCollection};

@@ -285,28 +285,60 @@ export class MerchCardCollection extends LitElement {
             <sp-action-menu
                 id="sortButton"
                 size="m"
-                @change="${this.sortChanged}"
                 selects="single"
-                value="${alphabetical
-                    ? SORT_ORDER.alphabetical
-                    : SORT_ORDER.authored}
-                aria-activedescendant="${alphabetical 
-                    ? 'sp-menu-item-alphabetical' 
+                @keydown="${this.onKeyDown}"
+                aria-activedescendant="${alphabetical
+                    ? 'sp-menu-item-alphabetical'
                     : 'sp-menu-item-authored'}"
             >
                 <span slot="label-only"
                     >${sortText}:
                     ${alphabetical ? alphabeticallyText : popularityText}</span
                 >
-                <sp-menu-item id="sp-menu-item-authored" value="${SORT_ORDER.authored}"
-                    role="menuitemradio" aria-checked="${!alphabetical}">${popularityText}</sp-menu-item
+                <sp-menu-item
+                    id="sp-menu-item-authored"
+                    value="${SORT_ORDER.authored}"
+                    role="menuitemradio"
+                    aria-checked="${!alphabetical}"
+                    tabindex="0"
                 >
-                <sp-menu-item id="sp-menu-item-alphabetical" value="${SORT_ORDER.alphabetical}"
-                    role="menuitemradio" aria-checked="${alphabetical}">${alphabeticallyText}</sp-menu-item
+                    ${popularityText}
+                </sp-menu-item>
+                <sp-menu-item
+                    id="sp-menu-item-alphabetical"
+                    value="${SORT_ORDER.alphabetical}"
+                    role="menuitemradio"
+                    aria-checked="${alphabetical}"
+                    tabindex="0"
                 >
+                    ${alphabeticallyText}
+                </sp-menu-item>
             </sp-action-menu>
         `;
     }
+    
+    onKeyDown(event) {
+        const menu = this.shadowRoot.getElementById('sortButton');
+        const items = Array.from(menu.querySelectorAll('sp-menu-item'));
+        const currentIndex = items.findIndex((item) =>
+            item.id === menu.getAttribute('aria-activedescendant')
+        );
+    
+        if (event.key === 'ArrowDown') {
+            const nextIndex = (currentIndex + 1) % items.length;
+            this.updateActiveDescendant(menu, items[nextIndex]);
+        } else if (event.key === 'ArrowUp') {
+            const prevIndex = (currentIndex - 1 + items.length) % items.length;
+            this.updateActiveDescendant(menu, items[prevIndex]);
+        }
+    }
+    
+    updateActiveDescendant(menu, activeItem) {
+        menu.setAttribute('aria-activedescendant', activeItem.id);
+        activeItem.setAttribute('aria-checked', 'true');
+        activeItem.focus();
+    }
+    
 
     sortChanged(event) {
         if (event.target.value === SORT_ORDER.authored) {
