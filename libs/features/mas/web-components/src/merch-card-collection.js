@@ -285,62 +285,55 @@ export class MerchCardCollection extends LitElement {
             <sp-action-menu
                 id="sortButton"
                 size="m"
+                @change="${this.sortChanged}"
                 selects="single"
-                @keydown="${this.onKeyDown}"
-                aria-activedescendant="${alphabetical
-                    ? 'sp-menu-item-alphabetical'
-                    : 'sp-menu-item-authored'}"
+                value="${alphabetical ? SORT_ORDER.alphabetical : SORT_ORDER.authored}"
+                aria-activedescendant="${alphabetical ? 'sp-menu-item-alphabetical' : 'sp-menu-item-authored'}"
+                @keydown="${this.onMenuKeydown}"
             >
-                <span slot="label-only"
-                    >${sortText}:
-                    ${alphabetical ? alphabeticallyText : popularityText}</span
-                >
-                <sp-menu-item
-                    id="sp-menu-item-authored"
-                    value="${SORT_ORDER.authored}"
-                    role="menuitemradio"
-                    aria-checked="${!alphabetical}"
-                    tabindex="0"
-                >
+                <span slot="label-only">${sortText}: ${alphabetical ? alphabeticallyText : popularityText}</span>
+                <sp-menu-item id="sp-menu-item-authored" value="${SORT_ORDER.authored}" role="menuitemradio" aria-checked="${!alphabetical}">
                     ${popularityText}
                 </sp-menu-item>
-                <sp-menu-item
-                    id="sp-menu-item-alphabetical"
-                    value="${SORT_ORDER.alphabetical}"
-                    role="menuitemradio"
-                    aria-checked="${alphabetical}"
-                    tabindex="0"
-                >
+                <sp-menu-item id="sp-menu-item-alphabetical" value="${SORT_ORDER.alphabetical}" role="menuitemradio" aria-checked="${alphabetical}">
                     ${alphabeticallyText}
                 </sp-menu-item>
             </sp-action-menu>
         `;
     }
     
-    onKeyDown(event) {
-        console.log('key down pressed, event: ', event);
-        const menu = this.shadowRoot.getElementById('sortButton');
+    onMenuKeydown(event) {
+        const menu = this.shadowRoot.querySelector('#sortButton');
         const items = Array.from(menu.querySelectorAll('sp-menu-item'));
-        const currentIndex = items.findIndex((item) =>
-            item.id === menu.getAttribute('aria-activedescendant')
-        );
-    
-        if (event.key === 'ArrowDown') {
-            const nextIndex = (currentIndex + 1) % items.length;
-            console.log('nextIndex: ', nextIndex);
-            this.updateActiveDescendant(menu, items[nextIndex]);
-        } else if (event.key === 'ArrowUp') {
-            const prevIndex = (currentIndex - 1 + items.length) % items.length;
-            console.log('prevIndex: ', prevIndex);
-            this.updateActiveDescendant(menu, items[prevIndex]);
+        let currentIndex = items.findIndex(item => item.id === menu.getAttribute('aria-activedescendant'));
+
+        switch (event.key) {
+            case 'ArrowDown':
+            case 'Down':
+                currentIndex = (currentIndex + 1) % items.length;
+                this.setFocusToMenuitem(items[currentIndex]);
+                event.preventDefault();
+                break;
+            case 'ArrowUp':
+            case 'Up':
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                this.setFocusToMenuitem(items[currentIndex]);
+                event.preventDefault();
+                break;
+            case 'Enter':
+            case ' ':
+                items[currentIndex].click();
+                event.preventDefault();
+                break;
+            default:
+                break;
         }
     }
-    
-    updateActiveDescendant(menu, activeItem) {
-        console.log('activeItem: ', activeItem);
-        menu.setAttribute('aria-activedescendant', activeItem.id);
-        activeItem.setAttribute('aria-checked', 'true');
-        activeItem.focus();
+
+    setFocusToMenuitem(newMenuitem) {
+        const menu = this.shadowRoot.querySelector('#sortButton');
+        menu.setAttribute('aria-activedescendant', newMenuitem.id);
+        newMenuitem.focus();
     }
     
 
