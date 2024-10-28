@@ -131,6 +131,7 @@ import{html as c,LitElement as v}from"../lit-all.min.js";var m=class{constructor
               </merch-search>`:""}observeMenuItems(){console.log("observeMenuItems");let e=this.shadowRoot.querySelector("#sortButton");if(!e){console.error("Menu not found");return}let t=Array.from(e.querySelectorAll("sp-menu-item")),s=new MutationObserver(i=>{i.forEach(n=>{n.attributeName==="focused"&&this.activeItemId!==n.target.id&&this.onMenuItemFocusChange(n.target)})});t.forEach(i=>{s.observe(i,{attributes:!0})})}onMenuItemFocusChange(e){console.log("onMenuItemFocusChange",e),e.hasAttribute("focused")&&this.activeItemId!==e.id&&(this.activeItemId=e.id,this.updateAriaActiveDescendant())}updateAriaActiveDescendant(){console.log("updateAriaActiveDescendant",this.activeItemId);let e=this.shadowRoot.querySelector("#sortButton");e?(e.setAttribute("aria-activedescendant",this.activeItemId),Array.from(e.querySelectorAll("sp-menu-item")).forEach(s=>{s.id===this.activeItemId?(s.setAttribute("tabindex",0),s.focus()):s.setAttribute("tabindex",-1)})):console.error("Menu not found")}get sortButton(){let e=d(this,"sortText"),t=d(this,"popularityText"),s=d(this,"alphabeticallyText");if(!(e&&t&&s))return;let i=this.sort===a.alphabetical;return c`
             <sp-action-menu
                 id="sortButton"
+                role="menu"
                 size="m"
                 @change="${this.sortChanged}"
                 selects="single"
@@ -141,10 +142,10 @@ import{html as c,LitElement as v}from"../lit-all.min.js";var m=class{constructor
                     >${e}:
                     ${i?s:t}</span
                 >
-                <sp-menu-item id="authored" value="${a.authored}"
+                <sp-menu-item role="menuitem" id="authored" value="${a.authored}"
                     >${t}</sp-menu-item
                 >
-                <sp-menu-item id="alphabetical" value="${a.alphabetical}"
+                <sp-menu-item role="menuitem" id="alphabetical" value="${a.alphabetical}"
                     >${s}</sp-menu-item
                 >
             </sp-action-menu>
