@@ -314,10 +314,10 @@ export class MerchCardCollection extends LitElement {
             const items = Array.from(menu.querySelectorAll('sp-menu-item'));
             items.forEach((item) => {
                 if (item.id === this.activeItemId) {
-                    item.setAttribute('tabindex', '0');
+                    item.setAttribute('tabindex', 0);
                     item.focus();
                 } else {
-                    item.setAttribute('tabindex', '-1');
+                    item.setAttribute('tabindex', -1);
                 }
             }); 
         } else {
