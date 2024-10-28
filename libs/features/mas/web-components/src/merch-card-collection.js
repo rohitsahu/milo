@@ -311,6 +311,15 @@ export class MerchCardCollection extends LitElement {
         const menu = this.shadowRoot.querySelector('#sortButton');
         if (menu) {
             menu.setAttribute('aria-activedescendant', this.activeItemId);
+            const items = Array.from(menu.querySelectorAll('sp-menu-item'));
+            items.forEach((item) => {
+                if (item.id === this.activeItemId) {
+                    item.setAttribute('tabindex', '0');
+                    item.focus();
+                } else {
+                    item.setAttribute('tabindex', '-1');
+                }
+            }); 
         } else {
             console.error('Menu not found');
         }
