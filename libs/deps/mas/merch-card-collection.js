@@ -142,10 +142,10 @@ import{html as c,LitElement as v}from"../lit-all.min.js";var m=class{constructor
                     >${e}:
                     ${i?s:t}</span
                 >
-                <sp-menu-item role="menuitem" id="authored" value="${a.authored}"
+                <sp-menu-item role="menuitem" id="authored" label="abc" value="${a.authored}"
                     >${t}</sp-menu-item
                 >
-                <sp-menu-item role="menuitem" id="alphabetical" value="${a.alphabetical}"
+                <sp-menu-item role="menuitem" id="alphabetical" label="zxc" value="${a.alphabetical}"
                     >${s}</sp-menu-item
                 >
             </sp-action-menu>

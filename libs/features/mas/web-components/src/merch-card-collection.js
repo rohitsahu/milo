@@ -349,10 +349,10 @@ export class MerchCardCollection extends LitElement {
                     >${sortText}:
                     ${alphabetical ? alphabeticallyText : popularityText}</span
                 >
-                <sp-menu-item role="menuitem" id="authored" value="${SORT_ORDER.authored}"
+                <sp-menu-item role="menuitem" id="authored" label="abc" value="${SORT_ORDER.authored}"
                     >${popularityText}</sp-menu-item
                 >
-                <sp-menu-item role="menuitem" id="alphabetical" value="${SORT_ORDER.alphabetical}"
+                <sp-menu-item role="menuitem" id="alphabetical" label="zxc" value="${SORT_ORDER.alphabetical}"
                     >${alphabeticallyText}</sp-menu-item
                 >
             </sp-action-menu>
