@@ -287,7 +287,7 @@ export class MerchCardCollection extends LitElement {
 
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'focused') {
+                if (mutation.attributeName === 'focused'  && this.activeItemId !== mutation.target.id) {
                     this.onMenuItemFocusChange(mutation.target);
                 }
             });
@@ -300,7 +300,7 @@ export class MerchCardCollection extends LitElement {
 
     onMenuItemFocusChange(focusedItem) {
         console.log('onMenuItemFocusChange', focusedItem);
-        if (focusedItem.hasAttribute('focused')) {
+        if (focusedItem.hasAttribute('focused') && this.activeItemId !== focusedItem.id) {
             this.activeItemId = focusedItem.id;
             this.updateAriaActiveDescendant();
         }
