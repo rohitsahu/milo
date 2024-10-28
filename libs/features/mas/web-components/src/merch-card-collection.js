@@ -108,6 +108,7 @@ export class MerchCardCollection extends LitElement {
         this.hasMore = false;
         this.resultCount = undefined;
         this.displayResult = false;
+        this.activeItemId = null;
     }
 
     render() {
@@ -181,6 +182,8 @@ export class MerchCardCollection extends LitElement {
                 filter: this.sidenav?.filters.selectedText,
             });
         });
+
+        this.observeMenuItems();
     }
 
     connectedCallback() {
@@ -273,6 +276,46 @@ export class MerchCardCollection extends LitElement {
             : '';
     }
 
+    observeMenuItems() {
+        console.log('observeMenuItems');
+        const menu = this.shadowRoot.querySelector('#sortButton');
+        if (!menu) {
+            console.error('Menu not found');
+            return;
+        }
+        const items = Array.from(menu.querySelectorAll('sp-menu-item'));
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'focused') {
+                    this.onMenuItemFocusChange(mutation.target);
+                }
+            });
+        });
+
+        items.forEach((item) => {
+            observer.observe(item, { attributes: true });
+        });
+    }
+
+    onMenuItemFocusChange(focusedItem) {
+        console.log('onMenuItemFocusChange', focusedItem);
+        if (focusedItem.hasAttribute('focused')) {
+            this.activeItemId = focusedItem.id;
+            this.updateAriaActiveDescendant();
+        }
+    }
+
+    updateAriaActiveDescendant() {
+        console.log('updateAriaActiveDescendant', this.activeItemId);
+        const menu = this.shadowRoot.querySelector('#sortButton');
+        if (menu) {
+            menu.setAttribute('aria-activedescendant', this.activeItemId);
+        } else {
+            console.error('Menu not found');
+        }
+    }
+
     get sortButton() {
         const sortText = getSlotText(this, 'sortText');
         const popularityText = getSlotText(this, 'popularityText');
@@ -290,15 +333,16 @@ export class MerchCardCollection extends LitElement {
                 value="${alphabetical
                     ? SORT_ORDER.alphabetical
                     : SORT_ORDER.authored}"
+                aria-activedescendant="${this.activeItemId || ''}"
             >
                 <span slot="label-only"
                     >${sortText}:
                     ${alphabetical ? alphabeticallyText : popularityText}</span
                 >
-                <sp-menu-item value="${SORT_ORDER.authored}"
+                <sp-menu-item id="authored" value="${SORT_ORDER.authored}"
                     >${popularityText}</sp-menu-item
                 >
-                <sp-menu-item value="${SORT_ORDER.alphabetical}"
+                <sp-menu-item id="alphabetical" value="${SORT_ORDER.alphabetical}"
                     >${alphabeticallyText}</sp-menu-item
                 >
             </sp-action-menu>
@@ -306,6 +350,7 @@ export class MerchCardCollection extends LitElement {
     }
 
     sortChanged(event) {
+        console.log('sortChanged', event.target.value);
         if (event.target.value === SORT_ORDER.authored) {
             pushState({ sort: undefined });
         } else {
