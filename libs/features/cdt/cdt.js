@@ -61,7 +61,7 @@ function loadCountdownTimer(
       const startTime = timeRangesEpoch[i];
       const endTime = timeRangesEpoch[i + 1];
 
-      if (currentTime >= startTime && currentTime <= endTime) {
+      if (currentTime >= startTime && currentTime < endTime) {
         isVisible = true;
         const diffTime = endTime - currentTime;
         const daysLeft = Math.floor(diffTime / (1000 * 60 * 60 * 24));
